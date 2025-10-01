@@ -1,7 +1,7 @@
 # Mother Tree Crafts
 Hello any intrepid visitor, and welcome to Mother Tree Crafts!
 <br><br>
-This repo is for what will be a 3-D print as well as other handicraft store for a good friend of mine who currently doesn't have a main way to show the work they have done, so I am making this to help get them some better coverage on their work.
+This repo is for what will be a 3-D print as well as other handicraft store for a client who currently doesn't have a main way to show the work they have done, so I am making this to help get them some better coverage on their work.
 <br><br>
 Granted for this intial iteration the webpage will act as a gallery to highlight the pieces they have already done as well as currently being worked on then will hopefully expand into an e-commerce webpage allowing for more robust features to be implemented.
 
