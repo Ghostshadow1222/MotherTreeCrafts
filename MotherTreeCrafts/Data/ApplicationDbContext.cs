@@ -4,7 +4,7 @@ using MotherTreeCrafts.Models;
 
 namespace MotherTreeCrafts.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<Account>
+    public class ApplicationDbContext : IdentityDbContext<UserAccount>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
