@@ -12,18 +12,18 @@ public class UserAccount : IdentityUser
     /// <summary>
     /// User's legal first name
     /// </summary>
-    public required string FirstName { get; set; }
+    public string? FirstName { get; set; }
     /// <summary>
     /// User's legal last name
     /// </summary>
-    public required string LastName { get; set; }
+    public string? LastName { get; set; }
     /// <summary>
     /// User's address for sending out orders
     /// </summary>
-    public required string ShippingAddress { get; set; }
+    public string? ShippingAddress { get; set; }
     /// <summary>
     /// User's address for billing purposes
     /// </summary>
-    public required string BillingAddress { get; set; }
+    public string? BillingAddress { get; set; }
 
 }
