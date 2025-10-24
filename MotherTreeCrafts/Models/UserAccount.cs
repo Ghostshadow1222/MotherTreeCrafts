@@ -7,7 +7,7 @@ namespace MotherTreeCrafts.Models;
 /// Represents a user account with additional profile information
 /// </summary>
 /// <remarks>Use this class for additional data specific to users outside of the default identity fields</remarks>
-public class Account : IdentityUser
+public class UserAccount : IdentityUser
 {
     /// <summary>
     /// User's legal first name
