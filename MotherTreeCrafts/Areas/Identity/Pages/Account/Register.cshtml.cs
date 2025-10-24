@@ -80,6 +80,19 @@ namespace MotherTreeCrafts.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            [Required]
+            [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Username can only contain letters and numbers.")]
+            public string UserName { get; set; }
+
+            [Required]
+            public string FirstName { get; set; }
+
+            [Required]
+            public string LastName { get; set; }
+
+            // public string ShippingAddress { get; set; } - Will be added later for order shipping, currently not needed
+            // public string BillingAddress { get; set; } - Will be added later for order billing, currently not needed
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -115,7 +128,11 @@ namespace MotherTreeCrafts.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                // Populates custom properties
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+
+                await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
