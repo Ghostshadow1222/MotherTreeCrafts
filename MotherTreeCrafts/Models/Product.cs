@@ -45,4 +45,9 @@ public class Product
     /// Collection of reviews for this product
     /// </summary>
     public ICollection<ProductReview> Reviews { get; set; } = new List<ProductReview>();
+
+    /// <summary>
+    /// Collection of wishlist entries for this product
+    /// </summary>
+    public ICollection<Wishlist> WishlistEntries { get; set; } = new List<Wishlist>();
 }
