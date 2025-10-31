@@ -33,7 +33,6 @@ public class ProductReview
   /// <summary>
   /// Rating from 1 to 5 stars
   /// </summary>
-  [Required]
   [Range(1, 5)]
   public int Rating { get; set; }
 
@@ -53,7 +52,8 @@ public class ProductReview
   /// <summary>
   /// Date and time when the review was created
   /// </summary>
-  public DateTime ReviewDate { get; set; } = DateTime.UtcNow;
+  [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+  public DateTime ReviewDate { get; set; }
 
   /// <summary>
   /// Whether the review has been verified (e.g., verified purchase)
