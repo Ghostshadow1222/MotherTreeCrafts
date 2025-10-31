@@ -50,6 +50,7 @@ public class Wishlist
   /// <summary>
   /// Priority level for this wishlist item (1 = highest priority)
   /// </summary>
+  [Required]
   [Range(1, 5)]
-  public int? Priority { get; set; }
+  public int Priority { get; set; }
 }
