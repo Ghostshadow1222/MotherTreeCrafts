@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MotherTreeCrafts.Models;
 
@@ -37,9 +38,10 @@ public class Product
     public string? CraftType { get; set; }
 
     /// <summary>
-    /// Total quantity of the product available in stock
+    /// Total quantity of the product available in stock (computed from Inventory)
     /// </summary>
-    public int StockQuantity { get; set; }
+    [NotMapped]
+    public int StockQuantity => Inventory?.AvailableQuantity ?? 0;
 
     /// <summary>
     /// Collection of reviews for this product
@@ -50,4 +52,9 @@ public class Product
     /// Collection of wishlist entries for this product
     /// </summary>
     public ICollection<Wishlist> WishlistEntries { get; set; } = new List<Wishlist>();
+
+    /// <summary>
+    /// Detailed inventory tracking for this product
+    /// </summary>
+    public Inventory? Inventory { get; set; }
 }
