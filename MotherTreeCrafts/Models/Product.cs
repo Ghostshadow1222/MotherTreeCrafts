@@ -41,4 +41,8 @@ public class Product
     /// </summary>
     public int StockQuantity { get; set; }
 
+    /// <summary>
+    /// Collection of reviews for this product
+    /// </summary>
+    public ICollection<ProductReview> Reviews { get; set; } = new List<ProductReview>();
 }
