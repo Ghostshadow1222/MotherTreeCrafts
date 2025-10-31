@@ -38,8 +38,8 @@ public class Wishlist
   /// <summary>
   /// Date and time when the product was added to the wishlist
   /// </summary>
-  [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-  public DateTime DateAdded { get; set; }
+  /// Automatically set to the current UTC time when a new Wishlist is created
+  public DateTime DateAdded { get; set; } = DateTime.UtcNow;
 
   /// <summary>
   /// Optional notes about why the user saved this item
