@@ -56,5 +56,6 @@ public class Product
     /// <summary>
     /// Detailed inventory tracking for this product
     /// </summary>
+    [ForeignKey("ProductId")]
     public Inventory? Inventory { get; set; }
 }
