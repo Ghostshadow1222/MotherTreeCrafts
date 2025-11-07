@@ -8,6 +8,11 @@ namespace MotherTreeCrafts.Models;
 /// </summary>
 public class Inventory
 {
+    // Constants for default values - easier to maintain and test
+    public const int DefaultReorderLevel = 5;
+    public const int DefaultMaxStockLevel = 100;
+    public const int DefaultReservedQuantity = 0;
+
     [Key]
     public int InventoryId { get; set; }
 
@@ -23,30 +28,78 @@ public class Inventory
     [ForeignKey(nameof(ProductId))]
     public Product? Product { get; set; }
 
+    private int _quantityOnHand;
     /// <summary>
     /// Current quantity of the product on hand
     /// </summary>
     [Required]
     [Range(0, int.MaxValue)]
-    public int QuantityOnHand { get; set; }
+    public int QuantityOnHand
+    {
+        get => _quantityOnHand;
+        set
+        {
+            if (value < 0)
+                throw new ArgumentException("Quantity on hand cannot be negative.", nameof(QuantityOnHand));
+            _quantityOnHand = value;
+            UpdateLastModified();
+        }
+    }
 
+    private int _reorderLevel = DefaultReorderLevel;
     /// <summary>
     /// Minimum quantity before reorder is needed
     /// </summary>
     [Range(0, int.MaxValue)]
-    public int ReorderLevel { get; set; } = 5;
+    public int ReorderLevel
+    {
+        get => _reorderLevel;
+        set
+        {
+            if (value < 0)
+                throw new ArgumentException("Reorder level cannot be negative.", nameof(ReorderLevel));
+            _reorderLevel = value;
+            UpdateLastModified();
+        }
+    }
 
+    private int _maxStockLevel = DefaultMaxStockLevel;
     /// <summary>
     /// Maximum quantity to keep in stock
     /// </summary>
     [Range(0, int.MaxValue)]
-    public int MaxStockLevel { get; set; } = 100;
+    public int MaxStockLevel
+    {
+        get => _maxStockLevel;
+        set
+        {
+            if (value < 0)
+                throw new ArgumentException("Max stock level cannot be negative.", nameof(MaxStockLevel));
+            if (value < ReorderLevel)
+                throw new ArgumentException("Max stock level cannot be less than reorder level.", nameof(MaxStockLevel));
+            _maxStockLevel = value;
+            UpdateLastModified();
+        }
+    }
 
+    private int _reservedQuantity = DefaultReservedQuantity;
     /// <summary>
     /// Quantity currently reserved for pending orders
     /// </summary>
     [Range(0, int.MaxValue)]
-    public int ReservedQuantity { get; set; } = 0;
+    public int ReservedQuantity
+    {
+        get => _reservedQuantity;
+        private set // Made private - use ReserveStock/ReleaseStock methods instead
+        {
+            if (value < 0)
+                throw new ArgumentException("Reserved quantity cannot be negative.", nameof(ReservedQuantity));
+            if (value > QuantityOnHand)
+                throw new InvalidOperationException("Cannot reserve more than available quantity.");
+            _reservedQuantity = value;
+            UpdateLastModified();
+        }
+    }
 
     /// <summary>
     /// Available quantity (QuantityOnHand - ReservedQuantity)
@@ -81,11 +134,98 @@ public class Inventory
     /// <summary>
     /// Date and time of last inventory update
     /// </summary>
-    public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
+    public DateTime LastUpdated { get; private set; } = DateTime.UtcNow;
 
     /// <summary>
     /// Notes about the inventory (e.g., "Seasonal item", "Handmade - limited quantity")
     /// </summary>
     [MaxLength(500)]
     public string? Notes { get; set; }
+
+    // Business logic methods for better encapsulation
+
+    /// <summary>
+    /// Reserves a quantity of stock for an order
+    /// </summary>
+    /// <param name="quantity">Amount to reserve</param>
+    /// <exception cref="InvalidOperationException">Thrown when there is insufficient stock</exception>
+    public void ReserveStock(int quantity)
+    {
+        if (quantity <= 0)
+            throw new ArgumentException("Quantity must be positive.", nameof(quantity));
+
+        if (AvailableQuantity < quantity)
+            throw new InvalidOperationException($"Insufficient stock. Available: {AvailableQuantity}, Requested: {quantity}");
+
+        ReservedQuantity += quantity;
+    }
+
+    /// <summary>
+    /// Releases reserved stock (e.g., when an order is cancelled)
+    /// </summary>
+    /// <param name="quantity">Amount to release</param>
+    public void ReleaseStock(int quantity)
+    {
+        if (quantity <= 0)
+            throw new ArgumentException("Quantity must be positive.", nameof(quantity));
+
+        if (ReservedQuantity < quantity)
+            throw new InvalidOperationException($"Cannot release more than reserved. Reserved: {ReservedQuantity}, Requested: {quantity}");
+
+        ReservedQuantity -= quantity;
+    }
+
+    /// <summary>
+    /// Adds stock to inventory (e.g., when receiving new shipment)
+    /// </summary>
+    /// <param name="quantity">Amount to add</param>
+    public void AddStock(int quantity)
+    {
+        if (quantity <= 0)
+            throw new ArgumentException("Quantity must be positive.", nameof(quantity));
+
+        QuantityOnHand += quantity;
+    }
+
+    /// <summary>
+    /// Removes stock from inventory (e.g., when order is fulfilled)
+    /// </summary>
+    /// <param name="quantity">Amount to remove</param>
+    /// <param name="removeFromReserved">Whether to also reduce reserved quantity</param>
+    public void RemoveStock(int quantity, bool removeFromReserved = true)
+    {
+        if (quantity <= 0)
+            throw new ArgumentException("Quantity must be positive.", nameof(quantity));
+
+        if (QuantityOnHand < quantity)
+            throw new InvalidOperationException($"Insufficient stock. On hand: {QuantityOnHand}, Requested: {quantity}");
+
+        QuantityOnHand -= quantity;
+
+        if (removeFromReserved && ReservedQuantity >= quantity)
+        {
+            ReservedQuantity -= quantity;
+        }
+    }
+
+    /// <summary>
+    /// Validates the current inventory state
+    /// </summary>
+    /// <returns>True if valid, false otherwise</returns>
+    public bool Validate()
+    {
+        return QuantityOnHand >= 0
+            && ReservedQuantity >= 0
+            && ReservedQuantity <= QuantityOnHand
+            && ReorderLevel >= 0
+            && MaxStockLevel >= ReorderLevel;
+    }
+
+    /// <summary>
+    /// Updates the LastUpdated timestamp
+    /// </summary>
+    private void UpdateLastModified()
+    {
+        LastUpdated = DateTime.UtcNow;
+    }
 }
