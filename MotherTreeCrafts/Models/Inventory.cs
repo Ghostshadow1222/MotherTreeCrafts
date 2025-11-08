@@ -164,6 +164,8 @@ public class Inventory
     /// Releases reserved stock (e.g., when an order is cancelled)
     /// </summary>
     /// <param name="quantity">Amount to release</param>
+    /// <exception cref="ArgumentException">Thrown when quantity is not positive</exception>
+    /// <exception cref="InvalidOperationException">Thrown when releasing more than reserved</exception>
     public void ReleaseStock(int quantity)
     {
         if (quantity <= 0)
