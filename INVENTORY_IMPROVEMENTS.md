@@ -117,9 +117,9 @@ public DbSet<Wishlist> Wishlists { get; set; }
 - Invalid states (using reflection to bypass property validation)
 
 #### Integration Tests (4 tests)
-- Complete order workflow (reserve ? remove)
-- Cancelled order workflow (reserve ? release)
-- Restock workflow (detect low stock ? add stock)
+- Complete order workflow (reserve -> remove)
+- Cancelled order workflow (reserve -> release)
+- Restock workflow (detect low stock -> add stock)
 - Multiple simultaneous orders
 
 #### Edge Cases (3 tests)
