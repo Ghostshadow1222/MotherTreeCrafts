@@ -41,6 +41,8 @@ public class Inventory
         {
             if (value < 0)
                 throw new ArgumentException("Quantity on hand cannot be negative.", nameof(QuantityOnHand));
+            if (value < ReservedQuantity)
+                throw new ArgumentException("Quantity on hand cannot be less than reserved quantity.", nameof(QuantityOnHand));
             _quantityOnHand = value;
             UpdateLastModified();
         }
