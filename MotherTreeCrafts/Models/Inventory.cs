@@ -206,9 +206,9 @@ public class Inventory
 
         QuantityOnHand -= quantity;
 
-        if (removeFromReserved && ReservedQuantity >= quantity)
+        if (removeFromReserved)
         {
-            ReservedQuantity -= quantity;
+            ReservedQuantity = Math.Max(0, ReservedQuantity - quantity);
         }
     }
 
