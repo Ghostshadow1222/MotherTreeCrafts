@@ -64,7 +64,7 @@ public DbSet<Wishlist> Wishlists { get; set; }
 ```
 
 ### Entity Relationships Configured
-- **One-to-One**: Product ? Inventory with cascade delete
+- **One-to-One**: Product <-> Inventory with cascade delete
 - **Unique Constraint**: SKU field (null values allowed)
 - **Index**: ProductId for faster lookups
 
