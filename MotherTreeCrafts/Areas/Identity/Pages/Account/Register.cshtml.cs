@@ -85,9 +85,11 @@ namespace MotherTreeCrafts.Areas.Identity.Pages.Account
             public string UserName { get; set; }
 
             [Required]
+            [Display(Name = "First Name")]
             public string FirstName { get; set; }
 
             [Required]
+            [Display(Name = "Last Name")]
             public string LastName { get; set; }
 
             // public string ShippingAddress { get; set; } - Will be added later for order shipping, currently not needed
