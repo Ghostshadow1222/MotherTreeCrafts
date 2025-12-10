@@ -7,7 +7,6 @@ using MotherTreeCrafts.Models.ViewModels;
 
 namespace MotherTreeCrafts.Controllers;
 
-[Authorize]
 public class ProductsController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -19,7 +18,8 @@ public class ProductsController : Controller
         _logger = logger;
     }
 
-    // GET: Products
+    // GET: Products - Requires Authorization (temporarily disabled for testing)
+    [Authorize]
     public async Task<IActionResult> Index()
     {
         var products = await _context.Products
@@ -29,7 +29,8 @@ public class ProductsController : Controller
         return View(products);
     }
 
-    // GET: Products/Details/5
+    // GET: Products/Details/5 - Public
+    [AllowAnonymous]
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
@@ -50,15 +51,17 @@ public class ProductsController : Controller
         return View(product);
     }
 
-    // GET: Products/Create
+    // GET: Products/Create - Temporarily allowing all authenticated users for testing
+    [Authorize]
     public IActionResult Create()
     {
         return View();
     }
 
-    // POST: Products/Create
+    // POST: Products/Create - Temporarily allowing all authenticated users for testing
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize]
     public async Task<IActionResult> Create(ProductCreateViewModel model)
     {
         if (ModelState.IsValid)
@@ -123,7 +126,8 @@ public class ProductsController : Controller
         return View(model);
     }
 
-    // GET: Products/Edit/5
+    // GET: Products/Edit/5 - Requires Authorization
+    [Authorize(Roles = "Admin,Owner")]
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -144,6 +148,7 @@ public class ProductsController : Controller
     // POST: Products/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin,Owner")]
     public async Task<IActionResult> Edit(int id, Product product)
     {
         if (id != product.ProductId)
@@ -184,7 +189,8 @@ public class ProductsController : Controller
         return View(product);
     }
 
-    // GET: Products/Delete/5
+    // GET: Products/Delete/5 - Requires Authorization
+    [Authorize(Roles = "Admin,Owner")]
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -207,6 +213,7 @@ public class ProductsController : Controller
     // POST: Products/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin,Owner")]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         try
