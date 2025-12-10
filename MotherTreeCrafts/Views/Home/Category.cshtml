@@ -1,13 +1,14 @@
-﻿@model IEnumerable<MotherTreeCrafts.Models.Product>
+@model IEnumerable<MotherTreeCrafts.Models.Product>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = ViewData["Category"] as string ?? "Category";
+    var category = ViewData["Category"] as string ?? "Products";
 }
 
 <div class="container-fluid">
     <div class="text-center mb-4">
-        <h2 class="display-5 text-white">Welcome to Mother Tree Crafts</h2>
-        <p class="lead text-white">Handcrafted treasures and custom 3D prints</p>
+        <h2 class="display-5 text-white">@category</h2>
+        <p class="lead text-white">Browse our collection of @category.ToLower()</p>
     </div>
 
     @if (Model != null && Model.Any())
@@ -50,8 +51,8 @@
     else
     {
         <div class="text-center text-white">
-            <h3>No products available at this time</h3>
-            <p>Check back soon for new handcrafted items!</p>
+            <h3>No @category.ToLower() available at this time</h3>
+            <p>Check back soon for new items!</p>
         </div>
     }
 </div>
