@@ -1,0 +1,251 @@
+@model MotherTreeCrafts.Models.ViewModels.ProductCreateViewModel
+
+@{
+    ViewData["Title"] = "Create New Product";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-4">
+                <i class="bi bi-plus-circle"></i> Create New Product
+            </h1>
+            <hr />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10">
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                <!-- Basic Information Card -->
+                <div class="card mb-3">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Basic Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group mb-3">
+                                    <label asp-for="Title" class="form-label"></label>
+                                    <input asp-for="Title" class="form-control" placeholder="Enter product title" />
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mb-3">
+                                    <label asp-for="Price" class="form-label"></label>
+                                    <input asp-for="Price" class="form-control" placeholder="0.00" />
+                                    <span asp-validation-for="Price" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Description" class="form-label"></label>
+                            <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter product description"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="ImageUrl" class="form-label"></label>
+                            <input asp-for="ImageUrl" class="form-control" placeholder="https://example.com/image.jpg" />
+                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                            <small class="form-text text-muted">Enter the URL of the product image</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Details Card -->
+                <div class="card mb-3">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">Product Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="CraftType" class="form-label"></label>
+                                    <input asp-for="CraftType" class="form-control" placeholder="e.g., 3D Printing, Knitting, Pottery" />
+                                    <span asp-validation-for="CraftType" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="Material" class="form-label"></label>
+                                    <input asp-for="Material" class="form-control" placeholder="e.g., PLA, Wood, Fabric" />
+                                    <span asp-validation-for="Material" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="Dimensions" class="form-label"></label>
+                                    <input asp-for="Dimensions" class="form-control" placeholder="e.g., 10cm x 5cm x 3cm" />
+                                    <span asp-validation-for="Dimensions" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="WeightInGrams" class="form-label"></label>
+                                    <input asp-for="WeightInGrams" class="form-control" placeholder="0" />
+                                    <span asp-validation-for="WeightInGrams" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="ColorOptions" class="form-label"></label>
+                                    <input asp-for="ColorOptions" class="form-control" placeholder="Red, Blue, Green, Custom" />
+                                    <span asp-validation-for="ColorOptions" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="DifficultyLevel" class="form-label"></label>
+                                    <input asp-for="DifficultyLevel" class="form-control" placeholder="Beginner, Intermediate, Advanced" />
+                                    <span asp-validation-for="DifficultyLevel" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Tags" class="form-label"></label>
+                            <input asp-for="Tags" class="form-control" placeholder="miniature, gaming, home-decor" />
+                            <span asp-validation-for="Tags" class="text-danger"></span>
+                            <small class="form-text text-muted">Comma-separated tags for better categorization</small>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="DesignerName" class="form-label"></label>
+                            <input asp-for="DesignerName" class="form-control" placeholder="Designer or artist name" />
+                            <span asp-validation-for="DesignerName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Digital Product Card (conditionally shown) -->
+                <div class="card mb-3">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="mb-0">Digital Product Options</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check mb-3">
+                            <input asp-for="IsDigitalProduct" class="form-check-input" type="checkbox" />
+                            <label asp-for="IsDigitalProduct" class="form-check-label"></label>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="DigitalFileUrl" class="form-label"></label>
+                            <input asp-for="DigitalFileUrl" class="form-control" placeholder="URL or file path for downloadable content" />
+                            <span asp-validation-for="DigitalFileUrl" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Status Card -->
+                <div class="card mb-3">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">Product Status</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-check mb-3">
+                                    <input asp-for="IsActive" class="form-check-input" type="checkbox" checked />
+                                    <label asp-for="IsActive" class="form-check-label"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-check mb-3">
+                                    <input asp-for="IsFeatured" class="form-check-input" type="checkbox" />
+                                    <label asp-for="IsFeatured" class="form-check-label"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-check mb-3">
+                                    <input asp-for="IsCustomizable" class="form-check-input" type="checkbox" />
+                                    <label asp-for="IsCustomizable" class="form-check-label"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-check mb-3">
+                                    <input asp-for="IsMadeToOrder" class="form-check-input" type="checkbox" />
+                                    <label asp-for="IsMadeToOrder" class="form-check-label"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inventory Information Card -->
+                <div class="card mb-3">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">Inventory Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group mb-3">
+                                    <label asp-for="InitialStockQuantity" class="form-label"></label>
+                                    <input asp-for="InitialStockQuantity" class="form-control" placeholder="0" />
+                                    <span asp-validation-for="InitialStockQuantity" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mb-3">
+                                    <label asp-for="ReorderLevel" class="form-label"></label>
+                                    <input asp-for="ReorderLevel" class="form-control" placeholder="5" />
+                                    <span asp-validation-for="ReorderLevel" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mb-3">
+                                    <label asp-for="MaxStockLevel" class="form-label"></label>
+                                    <input asp-for="MaxStockLevel" class="form-control" placeholder="100" />
+                                    <span asp-validation-for="MaxStockLevel" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="SKU" class="form-label"></label>
+                                    <input asp-for="SKU" class="form-control" placeholder="SKU-001" />
+                                    <span asp-validation-for="SKU" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="StorageLocation" class="form-label"></label>
+                                    <input asp-for="StorageLocation" class="form-control" placeholder="Shelf A-1" />
+                                    <span asp-validation-for="StorageLocation" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="form-group mt-4 mb-4">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="bi bi-save"></i> Create Product
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary btn-lg">
+                        <i class="bi bi-x-circle"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

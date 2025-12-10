@@ -1,0 +1,254 @@
+@model MotherTreeCrafts.Models.Product
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container mt-4">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-action="Index">Products</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-md-5 mb-4">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" class="img-fluid rounded shadow" alt="@Model.Title" style="width: 100%; max-height: 500px; object-fit: cover;">
+            }
+            else
+            {
+                <div class="bg-light rounded shadow d-flex align-items-center justify-content-center" style="width: 100%; height: 400px;">
+                    <i class="bi bi-image" style="font-size: 5rem; color: #ccc;"></i>
+                </div>
+            }
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-7">
+            <h1 class="mb-3">@Model.Title</h1>
+            
+            <div class="mb-3">
+                @if (Model.IsFeatured)
+                {
+                    <span class="badge bg-warning text-dark">Featured</span>
+                }
+                @if (!Model.IsActive)
+                {
+                    <span class="badge bg-danger">Inactive</span>
+                }
+                @if (Model.IsDigitalProduct)
+                {
+                    <span class="badge bg-info">Digital Product</span>
+                }
+                @if (Model.IsCustomizable)
+                {
+                    <span class="badge bg-secondary">Customizable</span>
+                }
+                @if (Model.IsMadeToOrder)
+                {
+                    <span class="badge bg-primary">Made to Order</span>
+                }
+            </div>
+
+            <h3 class="text-success mb-4">@Model.Price.ToString("C")</h3>
+
+            @if (!string.IsNullOrEmpty(Model.Description))
+            {
+                <div class="mb-4">
+                    <h5>Description</h5>
+                    <p>@Model.Description</p>
+                </div>
+            }
+
+            <!-- Product Specifications -->
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Product Specifications</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        @if (!string.IsNullOrEmpty(Model.CraftType))
+                        {
+                            <dt class="col-sm-4">Craft Type:</dt>
+                            <dd class="col-sm-8">@Model.CraftType</dd>
+                        }
+                        
+                        @if (!string.IsNullOrEmpty(Model.Material))
+                        {
+                            <dt class="col-sm-4">Material:</dt>
+                            <dd class="col-sm-8">@Model.Material</dd>
+                        }
+                        
+                        @if (!string.IsNullOrEmpty(Model.Dimensions))
+                        {
+                            <dt class="col-sm-4">Dimensions:</dt>
+                            <dd class="col-sm-8">@Model.Dimensions</dd>
+                        }
+                        
+                        @if (Model.WeightInGrams.HasValue)
+                        {
+                            <dt class="col-sm-4">Weight:</dt>
+                            <dd class="col-sm-8">@Model.WeightInGrams.Value g</dd>
+                        }
+                        
+                        @if (!string.IsNullOrEmpty(Model.ColorOptions))
+                        {
+                            <dt class="col-sm-4">Color Options:</dt>
+                            <dd class="col-sm-8">@Model.ColorOptions</dd>
+                        }
+                        
+                        @if (!string.IsNullOrEmpty(Model.DifficultyLevel))
+                        {
+                            <dt class="col-sm-4">Difficulty Level:</dt>
+                            <dd class="col-sm-8">@Model.DifficultyLevel</dd>
+                        }
+                        
+                        @if (!string.IsNullOrEmpty(Model.DesignerName))
+                        {
+                            <dt class="col-sm-4">Designer:</dt>
+                            <dd class="col-sm-8">@Model.DesignerName</dd>
+                        }
+                    </dl>
+                </div>
+            </div>
+
+            <!-- Inventory Information -->
+            @if (Model.Inventory != null)
+            {
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Inventory Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row mb-0">
+                            <dt class="col-sm-4">Quantity on Hand:</dt>
+                            <dd class="col-sm-8">
+                                <span class="@(Model.Inventory.QuantityOnHand > 0 ? "text-success" : "text-danger")">
+                                    @Model.Inventory.QuantityOnHand units
+                                </span>
+                            </dd>
+                            
+                            <dt class="col-sm-4">Available:</dt>
+                            <dd class="col-sm-8">
+                                <span class="@(Model.Inventory.AvailableQuantity > 0 ? "text-success" : "text-danger")">
+                                    @Model.Inventory.AvailableQuantity units
+                                </span>
+                            </dd>
+                            
+                            @if (Model.Inventory.ReservedQuantity > 0)
+                            {
+                                <dt class="col-sm-4">Reserved:</dt>
+                                <dd class="col-sm-8">@Model.Inventory.ReservedQuantity units</dd>
+                            }
+                            
+                            @if (!string.IsNullOrEmpty(Model.Inventory.SKU))
+                            {
+                                <dt class="col-sm-4">SKU:</dt>
+                                <dd class="col-sm-8"><code>@Model.Inventory.SKU</code></dd>
+                            }
+                            
+                            @if (!string.IsNullOrEmpty(Model.Inventory.StorageLocation))
+                            {
+                                <dt class="col-sm-4">Storage Location:</dt>
+                                <dd class="col-sm-8">@Model.Inventory.StorageLocation</dd>
+                            }
+                            
+                            <dt class="col-sm-4">Last Updated:</dt>
+                            <dd class="col-sm-8">@Model.Inventory.LastUpdated.ToString("g")</dd>
+                        </dl>
+                        
+                        @if (Model.Inventory.NeedsReorder)
+                        {
+                            <div class="alert alert-warning mt-3 mb-0" role="alert">
+                                <i class="bi bi-exclamation-triangle"></i> Stock is below reorder level (@Model.Inventory.ReorderLevel units)
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            <!-- Tags -->
+            @if (!string.IsNullOrEmpty(Model.Tags))
+            {
+                <div class="mb-4">
+                    <h6>Tags:</h6>
+                    @foreach (var tag in Model.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        <span class="badge bg-light text-dark me-1">#@tag.Trim()</span>
+                    }
+                </div>
+            }
+
+            <!-- Digital Product Info -->
+            @if (Model.IsDigitalProduct && !string.IsNullOrEmpty(Model.DigitalFileUrl))
+            {
+                <div class="alert alert-info" role="alert">
+                    <h6 class="alert-heading">Digital Product</h6>
+                    <p class="mb-0">This is a digital product. Download link will be provided after purchase.</p>
+                </div>
+            }
+
+            <!-- Reviews Summary -->
+            @if (Model.Reviews.Any())
+            {
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Customer Reviews</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            <h3 class="mb-0 me-3">@Model.AverageRating.ToString("0.0")</h3>
+                            <div>
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    if (i <= Math.Floor(Model.AverageRating))
+                                    {
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    }
+                                    else if (i - 0.5 <= Model.AverageRating)
+                                    {
+                                        <i class="bi bi-star-half text-warning"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-star text-warning"></i>
+                                    }
+                                }
+                                <span class="ms-2 text-muted">(@Model.TotalReviews reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <!-- Action Buttons -->
+            <div class="btn-group w-100 mb-4" role="group">
+                <a asp-action="Edit" asp-route-id="@Model.ProductId" class="btn btn-warning">
+                    <i class="bi bi-pencil"></i> Edit
+                </a>
+                <a asp-action="Delete" asp-route-id="@Model.ProductId" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Delete
+                </a>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

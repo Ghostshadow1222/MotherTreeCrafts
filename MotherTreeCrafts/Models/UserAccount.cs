@@ -26,4 +26,8 @@ public class UserAccount : IdentityUser
     /// </summary>
     public string? BillingAddress { get; set; }
 
+    /// <summary>
+    /// Collection of wishlist items for this account
+    /// </summary>
+    public ICollection<Wishlist> WishlistItems { get; set; } = new List<Wishlist>();
 }
