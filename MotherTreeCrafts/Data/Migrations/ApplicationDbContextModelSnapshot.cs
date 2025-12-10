@@ -159,7 +159,7 @@ namespace MotherTreeCrafts.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("MotherTreeCrafts.Models.Account", b =>
+            modelBuilder.Entity("MotherTreeCrafts.Models.UserAccount", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -168,7 +168,6 @@ namespace MotherTreeCrafts.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("BillingAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -183,11 +182,9 @@ namespace MotherTreeCrafts.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -217,7 +214,6 @@ namespace MotherTreeCrafts.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ShippingAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -497,7 +493,7 @@ namespace MotherTreeCrafts.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("MotherTreeCrafts.Models.Account", null)
+                    b.HasOne("MotherTreeCrafts.Models.UserAccount", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -506,7 +502,7 @@ namespace MotherTreeCrafts.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("MotherTreeCrafts.Models.Account", null)
+                    b.HasOne("MotherTreeCrafts.Models.UserAccount", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -521,7 +517,7 @@ namespace MotherTreeCrafts.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MotherTreeCrafts.Models.Account", null)
+                    b.HasOne("MotherTreeCrafts.Models.UserAccount", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -530,7 +526,7 @@ namespace MotherTreeCrafts.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("MotherTreeCrafts.Models.Account", null)
+                    b.HasOne("MotherTreeCrafts.Models.UserAccount", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
