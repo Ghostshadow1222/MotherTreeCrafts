@@ -1,0 +1,178 @@
+@model MotherTreeCrafts.Models.UserAccount
+
+@{
+    ViewData["Title"] = "My Account";
+    var wishlistItems = ViewData["WishlistItems"] as IEnumerable<MotherTreeCrafts.Models.Wishlist>;
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-4 text-white">
+                <i class="bi bi-person-circle"></i> My Account
+            </h1>
+            
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Account Information Card -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0"><i class="bi bi-person"></i> Account Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Username:</dt>
+                        <dd class="col-sm-8">@Model.UserName</dd>
+
+                        <dt class="col-sm-4">Email:</dt>
+                        <dd class="col-sm-8">@Model.Email</dd>
+
+                        <dt class="col-sm-4">First Name:</dt>
+                        <dd class="col-sm-8">@(Model.FirstName ?? "Not set")</dd>
+
+                        <dt class="col-sm-4">Last Name:</dt>
+                        <dd class="col-sm-8">@(Model.LastName ?? "Not set")</dd>
+
+                        <dt class="col-sm-4">Shipping Address:</dt>
+                        <dd class="col-sm-8">@(Model.ShippingAddress ?? "Not set")</dd>
+
+                        <dt class="col-sm-4">Billing Address:</dt>
+                        <dd class="col-sm-8">@(Model.BillingAddress ?? "Not set")</dd>
+                    </dl>
+                    
+                    <div class="mt-3">
+                        <a asp-action="EditProfile" class="btn btn-primary">
+                            <i class="bi bi-pencil"></i> Edit Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Account Actions Card -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0"><i class="bi bi-gear"></i> Account Settings</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-3">
+                        <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="btn btn-outline-primary">
+                            <i class="bi bi-key"></i> Change Password
+                        </a>
+                        
+                        <a asp-area="Identity" asp-page="/Account/Manage/Email" class="btn btn-outline-primary">
+                            <i class="bi bi-envelope"></i> Change Email
+                        </a>
+                        
+                        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home")" method="post">
+                            <button type="submit" class="btn btn-outline-danger w-100">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Section -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0"><i class="bi bi-heart"></i> My Wishlist</h5>
+                </div>
+                <div class="card-body">
+                    @if (wishlistItems != null && wishlistItems.Any())
+                    {
+                        <div class="row">
+                            @foreach (var item in wishlistItems)
+                            {
+                                <div class="col-md-4 col-lg-3 mb-4">
+                                    <div class="card h-100">
+                                        @if (!string.IsNullOrEmpty(item.Product?.ImageUrl))
+                                        {
+                                            <img src="@item.Product.ImageUrl" class="card-img-top" alt="@item.Product.Title" style="height: 200px; object-fit: cover;">
+                                        }
+                                        else
+                                        {
+                                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                                <i class="bi bi-image" style="font-size: 3rem; color: #ccc;"></i>
+                                            </div>
+                                        }
+                                        
+                                        <div class="card-body">
+                                            <h6 class="card-title">@item.Product?.Title</h6>
+                                            <p class="card-text">
+                                                <strong>@item.Product?.Price.ToString("C")</strong>
+                                            </p>
+                                            
+                                            <div class="mb-2">
+                                                <small class="text-muted">
+                                                    Priority: 
+                                                    @for (int i = 0; i < item.Priority; i++)
+                                                    {
+                                                        <i class="bi bi-star-fill text-warning"></i>
+                                                    }
+                                                </small>
+                                            </div>
+                                            
+                                            @if (item.Product?.Inventory != null)
+                                            {
+                                                <p class="mb-2">
+                                                    <small class="@(item.Product.StockQuantity > 0 ? "text-success" : "text-danger")">
+                                                        @(item.Product.StockQuantity > 0 ? "In Stock" : "Out of Stock")
+                                                    </small>
+                                                </p>
+                                            }
+                                        </div>
+                                        
+                                        <div class="card-footer bg-transparent">
+                                            <form asp-action="RemoveFromWishlist" method="post" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="wishlistId" value="@item.WishlistId" />
+                                                <button type="submit" class="btn btn-sm btn-outline-danger w-100">
+                                                    <i class="bi bi-trash"></i> Remove
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <i class="bi bi-heart" style="font-size: 4rem; color: #ccc;"></i>
+                            <h4 class="mt-3">Your wishlist is empty</h4>
+                            <p class="text-muted">Start adding items to save them for later!</p>
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
+                                <i class="bi bi-shop"></i> Browse Products
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
