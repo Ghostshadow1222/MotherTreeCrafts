@@ -18,10 +18,10 @@ public class Wishlist
   public required string AccountId { get; set; }
 
   /// <summary>
-  /// Navigation property to the Account
+  /// Navigation property to the UserAccount
   /// </summary>
   [ForeignKey(nameof(AccountId))]
-  public Account? Account { get; set; }
+  public UserAccount? Account { get; set; }
 
   /// <summary>
   /// Foreign key to the Product that was saved
