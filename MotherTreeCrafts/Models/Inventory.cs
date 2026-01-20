@@ -47,7 +47,7 @@ public class Inventory
             UpdateLastModified();
         }
     }
-
+/*
     private int _reorderLevel = DefaultReorderLevel;
     /// <summary>
     /// Minimum quantity before reorder is needed
@@ -224,7 +224,7 @@ public class Inventory
             && ReorderLevel >= 0
             && MaxStockLevel >= ReorderLevel;
     }
-
+*/
     /// <summary>
     /// Updates the LastUpdated timestamp
     /// </summary>
