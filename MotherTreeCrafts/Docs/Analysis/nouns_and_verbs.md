@@ -3,6 +3,8 @@
 Some parts of the analysis will be coming from the code itself after review those parts are marked with (*),
 new addtions will be marked with (++) to better identify changes as project grows.
 
+Current nouns and verbs are from before the start of large review and refactoring effort of the project so there
+may be some changes and inconsistencies that will be fixed as the review and refactoring continues.
 
 ## Entities --
 (*)- Product 
