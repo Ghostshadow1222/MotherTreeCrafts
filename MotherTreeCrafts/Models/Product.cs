@@ -49,21 +49,25 @@ public class Product
     [MaxLength(100)]
     public string? Dimensions { get; set; }
 
+/* - Could be setup in alternate way?
     /// <summary>
     /// Weight of the product in grams (for shipping calculations)
     /// </summary>
     [Range(0, double.MaxValue)]
     public decimal? WeightInGrams { get; set; }
+*/
 
     /// <summary>
     /// Indicates if the product can be customized by customers
     /// </summary>
     public bool IsCustomizable { get; set; } = false;
 
+/* - Won't need for current version or future versions
     /// <summary>
     /// Indicates if this is a digital product (e.g., STL files, patterns, templates)
     /// </summary>
     public bool IsDigitalProduct { get; set; } = false;
+*/
 
     /// <summary>
     /// Comma-separated tags for better categorization and search (e.g., "3d-print,miniature,gaming")
@@ -71,6 +75,7 @@ public class Product
     [MaxLength(500)]
     public string? Tags { get; set; }
 
+/* - Could be readded later after deeper review?
     /// <summary>
     /// Indicates if the product is active and visible in the store
     /// </summary>
@@ -92,29 +97,35 @@ public class Product
     /// </summary>
     [MaxLength(50)]
     public string? DifficultyLevel { get; set; }
+*/
 
+/* - Moved to non-active, will want to confirm with client later
     /// <summary>
     /// URL or file path for downloadable digital content (for digital products)
     /// </summary>
     [MaxLength(500)]
     public string? DigitalFileUrl { get; set; }
-
+*/
     /// <summary>
     /// Designer or artist name (optional attribution)
     /// </summary>
     [MaxLength(200)]
     public string? DesignerName { get; set; }
 
+/* - Should be re-written/labelled when readded
     /// <summary>
     /// Indicates if this is a made-to-order item
     /// </summary>
     public bool IsMadeToOrder { get; set; } = false;
-
+*/ 
+  
+/* - Could be implemented better? Removed from current version
     /// <summary>
     /// Total quantity of the product available in stock (computed from Inventory)
     /// </summary>
     [NotMapped]
     public int StockQuantity => Inventory?.AvailableQuantity ?? 0;
+*/
 
     /// <summary>
     /// Average rating based on all reviews (computed property)
@@ -133,10 +144,12 @@ public class Product
     /// </summary>
     public ICollection<ProductReview> Reviews { get; set; } = new List<ProductReview>();
 
+/* - Will narrow down with client on keeping along with TotalReviews
     /// <summary>
     /// Collection of wishlist entries for this product
     /// </summary>
     public ICollection<Wishlist> WishlistEntries { get; set; } = new List<Wishlist>();
+*/
 
     /// <summary>
     /// Detailed inventory tracking for this product
