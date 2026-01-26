@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MotherTreeCrafts.Models;
 
+/* - Needs to be reviewed on frontend level to see where non-use case is happening, possibly needs big overhaul 
+
 /// <summary>
 /// Represents a user's wishlist item - linking an account to a saved product
 /// </summary>
@@ -54,3 +56,4 @@ public class Wishlist
   [Range(1, 5)]
   public int Priority { get; set; }
 }
+*/
