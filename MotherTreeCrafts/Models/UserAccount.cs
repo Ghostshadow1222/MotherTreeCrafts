@@ -30,4 +30,6 @@ public class UserAccount : IdentityUser
     /// Collection of wishlist items for this account
     /// </summary>
     public ICollection<Wishlist> WishlistItems { get; set; } = new List<Wishlist>();
+
+/* - Will need to talk more with client to see if class needs to change, currently no change */
 }
