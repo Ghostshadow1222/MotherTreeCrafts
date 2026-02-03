@@ -28,7 +28,7 @@ namespace MotherTreeCrafts.Controllers
             
             return View(products);
         }
-
+        /* -- Need to refactor how category is being assigned and identifyied
         public async Task<IActionResult> Category(string category)
         {
             if (string.IsNullOrEmpty(category))
@@ -48,7 +48,7 @@ namespace MotherTreeCrafts.Controllers
             
             return View("Category", products);
         }
-
+        */
         public IActionResult Privacy()
         {
             return View();
