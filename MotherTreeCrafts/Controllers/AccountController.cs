@@ -121,7 +121,7 @@ public class AccountController : Controller
             {
                 return Json(new { success = false, message = "Item already in wishlist" });
             }
-
+            /* -- Disabled wishlist function for better implementation later
             var wishlistItem = new Wishlist
             {
                 AccountId = user.Id,
@@ -131,7 +131,7 @@ public class AccountController : Controller
 
             _context.Wishlists.Add(wishlistItem);
             await _context.SaveChangesAsync();
-
+            */
             _logger.LogInformation("Product {ProductId} added to wishlist for user {UserId}", productId, user.Id);
             return Json(new { success = true, message = "Added to wishlist!" });
         }
