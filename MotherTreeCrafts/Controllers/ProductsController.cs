@@ -59,7 +59,7 @@ public class ProductsController : Controller
     {
         return View();
     }
-    /* -- Needs to be refactored to match with databse changes 
+    /* -- Needs to be refactored to match with database changes 
     // POST: Products/Create - Temporarily allowing all authenticated users for testing
     [HttpPost]
     [ValidateAntiForgeryToken]
