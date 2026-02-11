@@ -7,6 +7,8 @@ using MotherTreeCrafts.Models.ViewModels;
 
 namespace MotherTreeCrafts.Controllers;
 
+// Clean up comments and adjust meanings as necessary
+
 public class ProductsController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -57,7 +59,7 @@ public class ProductsController : Controller
     {
         return View();
     }
-
+    /* -- Needs to be refactored to match with database changes 
     // POST: Products/Create - Temporarily allowing all authenticated users for testing
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -125,7 +127,7 @@ public class ProductsController : Controller
 
         return View(model);
     }
-
+    */
     // GET: Products/Edit/5 - Requires Authorization
     [Authorize(Roles = "Admin,Owner")]
     public async Task<IActionResult> Edit(int? id)

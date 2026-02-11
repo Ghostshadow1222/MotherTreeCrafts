@@ -2,6 +2,8 @@
 @inject SignInManager<UserAccount> SignInManager
 @inject UserManager<UserAccount> UserManager 
 
+<!-- Will be slightly altered during refactor, currently a lower priority -->
+
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
