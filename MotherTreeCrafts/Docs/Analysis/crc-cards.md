@@ -9,7 +9,7 @@ Connections and relationships open to change and feedback
 #### Product
 Responsibilities:
 - Holds information relating to a product
-- Holds product status
+- Holds product stock status (in stock, out of stock, discontinued, etc.)
 
 Collaborators:
 - Inventory
