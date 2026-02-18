@@ -19,6 +19,13 @@ may be some changes and inconsistencies that will be fixed as the review and ref
   - verbs: register, login, logout, update, authenticate, authorize, manage
 (++)- Verification (should be for verifying users, but could be handled in UserAccount maybe?)
 	- verbs: send, verify, confirm, expire, resend
+(++)- Order
+	- verbs: create, update, cancel, view, track, complete, refund
+(++)- Cart
+	- verbs: add, remove, view, update, checkout, clear
+(++)- ProductType (Is categroy for products and possibly tags as well)
+	- verbs: create, edit, delete, view, assign, unassign, feature
+(++)- 
 
 
 ## Roles/Actors --
