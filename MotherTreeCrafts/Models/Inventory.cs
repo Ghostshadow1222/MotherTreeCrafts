@@ -47,7 +47,7 @@ public class Inventory
             UpdateLastModified();
         }
     }
-/*
+/* Not needed for this project
     private int _reorderLevel = DefaultReorderLevel;
     /// <summary>
     /// Minimum quantity before reorder is needed
@@ -64,7 +64,7 @@ public class Inventory
             UpdateLastModified();
         }
     }
-
+*/
     private int _maxStockLevel = DefaultMaxStockLevel;
     /// <summary>
     /// Maximum quantity to keep in stock
@@ -77,9 +77,6 @@ public class Inventory
         {
             if (value < 0)
                 throw new ArgumentException("Max stock level cannot be negative.", nameof(MaxStockLevel));
-            if (value < ReorderLevel)
-                throw new ArgumentException("Max stock level cannot be less than reorder level.", nameof(MaxStockLevel));
-            _maxStockLevel = value;
             UpdateLastModified();
         }
     }
@@ -224,7 +221,7 @@ public class Inventory
             && ReorderLevel >= 0
             && MaxStockLevel >= ReorderLevel;
     }
-*/
+
     /// <summary>
     /// Updates the LastUpdated timestamp
     /// </summary>
