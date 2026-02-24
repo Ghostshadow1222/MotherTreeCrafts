@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MotherTreeCrafts.Models;
 
+/* - Needs contact info (you dumbass) primary and optional secondary, and purchese info (later) */
+
 /// <summary>
 /// Represents a user account with additional profile information
 /// </summary>
@@ -13,23 +15,31 @@ public class UserAccount : IdentityUser
     /// User's legal first name
     /// </summary>
     public string? FirstName { get; set; }
+
     /// <summary>
     /// User's legal last name
     /// </summary>
     public string? LastName { get; set; }
+
     /// <summary>
     /// User's address for sending out orders
     /// </summary>
     public string? ShippingAddress { get; set; }
+
     /// <summary>
     /// User's address for billing purposes
     /// </summary>
     public string? BillingAddress { get; set; }
 
     /// <summary>
+    /// User's email address for order management
+    /// </summary>
+    public string? EmailAddress { get; set; }
+
+    /// <summary>
     /// Collection of wishlist items for this account
     /// </summary>
-    // public ICollection<Wishlist> WishlistItems { get; set; } = new List<Wishlist>();
+    public ICollection<Wishlist> WishlistItems { get; set; } = new List<Wishlist>();
 
-/* - Will need to talk more with client to see if class needs to change, currently no change */
+
 }
