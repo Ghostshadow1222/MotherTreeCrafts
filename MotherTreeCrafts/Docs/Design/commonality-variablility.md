@@ -14,3 +14,13 @@
 
 ## Variabilities
 
+### Variability 1: Inventory Reorder Logic
+- Why it may change: 
+  Reorder rules may vary based on product type, seasonality, supplier lead times, or sales velocity. Some products might need automatic reordering while others require manual approval.
+
+- How it is isolated: 
+  Policy Object (Rule Cluster)**  
+  Create an `IInventoryReorderPolicy` interface with implementations like `StandardReorderPolicy`, `SeasonalReorderPolicy`, or `CustomReorderPolicy`. The Inventory class uses this policy to determine when and how much to reorder, keeping reorder logic separate from core inventory tracking.
+  
+  Related Principle: Single Responsibility Principle, Strategy Pattern
+
