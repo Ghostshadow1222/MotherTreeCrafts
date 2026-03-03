@@ -22,6 +22,7 @@ public class ProductType
     /// </summary>
     [MaxLength(500)]
     public string? Description { get; set; }
+    
     /* Brought up by copilot, but not sure if we need this right now, will review with client
         /// <summary>
         /// URL-friendly version of the name for routing (e.g., "handmade-jewelry")
@@ -29,6 +30,7 @@ public class ProductType
         [MaxLength(150)]
         public string? Slug { get; set; }
     */
+
     /// <summary>
     /// Display order for sorting categories (lower numbers appear first)
     /// </summary>
