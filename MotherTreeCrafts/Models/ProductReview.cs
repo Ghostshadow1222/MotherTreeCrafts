@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MotherTreeCrafts.Models;
 
+/* - Willl add into later iteration */ 
+
 /// <summary>
 /// Represents a customer review for a product
 /// </summary>
@@ -23,13 +25,12 @@ public class ProductReview
   [ForeignKey(nameof(ProductId))]
   public Product? Product { get; set; }
 
-/* - Won't need currently, will review again with client
+/* - Won't need currently, will review again with client */
   /// <summary>
   /// User ID of the reviewer (optional - for authenticated users)
   /// </summary>
   [MaxLength(450)]
   public string? UserId { get; set; }
-*/
 
   /// <summary>
   /// Name of the reviewer
@@ -38,19 +39,19 @@ public class ProductReview
   [MaxLength(100)]
   public required string ReviewerName { get; set; }
 
-/* - Too much info for an review from a register user
-  /// <summary>
-  /// Email of the reviewer (optional, for verification purposes)
-  /// </summary>
-  [MaxLength(200)]
-  [EmailAddress]
-  public string? ReviewerEmail { get; set; }
-*/
+    /* - Too much info for an review from a register user 
+      /// <summary>
+      /// Email of the reviewer (optional, for verification purposes)
+      /// </summary>
+      [MaxLength(200)]
+      [EmailAddress]
+      public string? ReviewerEmail { get; set; }
+    */
 
-  /// <summary>
-  /// Rating from 1 to 5 stars
-  /// </summary>
-  [Range(1, 5)]
+    /// <summary>
+    /// Rating from 1 to 5 stars
+    /// </summary>
+    [Range(1, 5)]
   public int Rating { get; set; }
 
   /// <summary>
@@ -130,10 +131,10 @@ public class ProductReview
   [MaxLength(500)]
   public string? ModeratorNotes { get; set; }
 
-/* - Possibly re-write for broader use/add in additional depth to recommendation
-  /// <summary>
-  /// Indicates if the reviewer would recommend this product
-  /// </summary>
-  public bool? WouldRecommend { get; set; }
-*/
+    /* - Possibly re-write for broader use/add in additional depth to recommendation 
+      /// <summary>
+      /// Indicates if the reviewer would recommend this product
+      /// </summary>
+      public bool? WouldRecommend { get; set; }
+    */
 }
