@@ -1,6 +1,6 @@
 ﻿Analysis page for commonalities and variabilities in the MotherTreeCrafts project, based on the identified entities, roles, and attributes.
 
-
+More variabilities may be added as the project evolves, but this provides a starting point for understanding the core design and potential areas of change.
 
 ## Commonalities
 
