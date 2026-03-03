@@ -17,8 +17,6 @@ may be some changes and inconsistencies that will be fixed as the review and ref
   - verbs: add, remove, view, prioritize, update, manage
 (*)- UserAccount (Similar debating as ProductReview)
   - verbs: register, login, logout, update, authenticate, authorize, manage
-(++)- Verification (should be for verifying users, but could be handled in UserAccount maybe?)
-	- verbs: send, verify, confirm, expire, resend
 (++)- Order
 	- verbs: create, update, cancel, view, track, complete, refund
 (++)- Cart
