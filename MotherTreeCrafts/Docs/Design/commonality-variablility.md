@@ -34,3 +34,12 @@
   
   Related Principle: Favor composition over inheritance, Separation of Concerns
 
+    ### Variability 3: Product Search and Filtering
+- Why it may change:  
+  Search algorithms may evolve from simple SQL queries to full-text search, fuzzy matching, AI-powered recommendations, or third-party search services (Elasticsearch, Azure Cognitive Search). Filter criteria will expand as product attributes grow.
+
+- How it is isolated:
+  Strategy Pattern + Interface  
+  Create an `IProductSearchService` interface with implementations for different search backends (DatabaseSearch, ElasticsearchSearch). The search logic stays out of the Product model and can be swapped without affecting core domain logic. Filter specifications can use the Specification Pattern.
+  
+  Related Principle: Dependency Inversion Principle, Encapsulate what varies
