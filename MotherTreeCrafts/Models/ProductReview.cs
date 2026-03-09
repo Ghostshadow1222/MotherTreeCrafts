@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MotherTreeCrafts.Models;
 
-/* - Willl add into later iteration */ 
+/* - Will add into later iteration */ 
 
 /// <summary>
 /// Represents a customer review for a product
@@ -25,7 +25,6 @@ public class ProductReview
   [ForeignKey(nameof(ProductId))]
   public Product? Product { get; set; }
 
-/* - Won't need currently, will review again with client */
   /// <summary>
   /// User ID of the reviewer (optional - for authenticated users)
   /// </summary>
@@ -48,10 +47,10 @@ public class ProductReview
       public string? ReviewerEmail { get; set; }
     */
 
-    /// <summary>
-    /// Rating from 1 to 5 stars
-    /// </summary>
-    [Range(1, 5)]
+  /// <summary>
+  /// Rating from 1 to 5 stars
+  /// </summary>
+  [Range(1, 5)]
   public int Rating { get; set; }
 
   /// <summary>
