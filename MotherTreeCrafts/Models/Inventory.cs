@@ -218,8 +218,7 @@ public class Inventory
         return QuantityOnHand >= 0
             && ReservedQuantity >= 0
             && ReservedQuantity <= QuantityOnHand
-            && ReorderLevel >= 0
-            && MaxStockLevel >= ReorderLevel;
+            && MaxStockLevel >= 0;
     }
 
     /// <summary>
