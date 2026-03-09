@@ -11,14 +11,14 @@ public class ProductType
     public int ProductTypeId { get; set; }
 
     /// <summary>
-    /// Name of the product type/category
+    /// Name of the product type (e.g., "3D Printing", "Knitting", "Pottery", "Woodworking")
     /// </summary>
     [Required]
     [MaxLength(100)]
     public required string Name { get; set; }
 
     /// <summary>
-    /// Detailed description of this product type
+    /// Optional description of this product type
     /// </summary>
     [MaxLength(500)]
     public string? Description { get; set; }
@@ -37,12 +37,7 @@ public class ProductType
     public int DisplayOrder { get; set; } = 0;
 
     /// <summary>
-    /// Indicates if this category is active and visible to customers
+    /// Collection of products belonging to this type
     /// </summary>
-    public bool IsActive { get; set; } = true;
-
-    /// <summary>
-    /// Indicates if this category should be featured on the homepage
-    /// </summary>
-    public bool IsFeatured { get; set; } = false;
+    public ICollection<Product> Products { get; set; } = new List<Product>();
 }
