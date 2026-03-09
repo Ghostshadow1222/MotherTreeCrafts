@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MotherTreeCrafts.Models;
 
-/* - Willl add into later iteration */ 
+/* - Will add into later iteration */ 
 
 /// <summary>
 /// Represents a customer review for a product
