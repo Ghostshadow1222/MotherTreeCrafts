@@ -121,6 +121,20 @@ Include your diagram image below.
   - System retrieves only products matching selected category
   - Continue at step 3
 
+**## Implementation Evidence ##**
+- Entry point: [ProductsController.Index()](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts/Controllers/ProductsController.cs#L18-L26)
+- Key collaborators:
+  - [ProductsController.Details()](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts/Controllers/ProductsController.cs#L29-L45)
+  - [Product model](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts/Models/Product.cs)
+  - [Inventory model](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts/Models/Inventory.cs)
+
+**## Unit Test Evidence ##**
+- Test file: [ProductBrowsingTests.cs](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts.Tests/UseCases/ProductBrowsingTests.cs)
+- Covers success path: `Index_ShouldReturnAllActiveProducts` ([link](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts.Tests/UseCases/ProductBrowsingTests.cs#L27-L52))
+- Covers success path: `Details_ShouldReturnProductWithInventoryAndReviews` ([link](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts.Tests/UseCases/ProductBrowsingTests.cs#L54-L86))
+- Covers alternate path: `Index_ShouldReturnEmptyList_WhenNoCatalogProducts` ([link](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts.Tests/UseCases/ProductBrowsingTests.cs#L92-L104))
+- Covers alternate path: `Details_ShouldReturnNotFound_WhenProductDoesNotExist` ([link](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts.Tests/UseCases/ProductBrowsingTests.cs#L120-L131))
+
 ---
 
 ### UC2: Customer adds product to wishlist
@@ -155,6 +169,17 @@ Include your diagram image below.
   - System removes product from wishlist
   - System confirms removal
   - Use case ends
+
+**## Implementation Evidence ##**
+- Entry point: [Wishlist model](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts/Models/Wishlist.cs)
+- Key collaborators:
+  - [Product model](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts/Models/Product.cs)
+  - [UserAccount model](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts/Models/UserAccount.cs)
+
+**## Unit Test Evidence ##**
+- Test file: [WishlistTests.cs](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts.Tests/UseCases/WishlistTests.cs)
+- Covers success path: `Wishlist_ShouldCreateWithValidData` ([link](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts.Tests/UseCases/WishlistTests.cs#L17-L34))
+- Covers alternate path: `Wishlist_ShouldPreventDuplicateProductForSameUser` ([link](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts.Tests/UseCases/WishlistTests.cs#L95-L110))
 
 ---
 
@@ -195,6 +220,17 @@ Include your diagram image below.
   - System rejects review submission
   - System provides feedback on policy violation
   - Customer can modify and resubmit
+
+**## Implementation Evidence ##**
+- Entry point: [ProductReview model](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts/Models/ProductReview.cs)
+- Key collaborators:
+  - [Product model](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts/Models/Product.cs)
+  - [UserAccount model](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts/Models/UserAccount.cs)
+
+**## Unit Test Evidence ##**
+- Test file: [ProductReviewTests.cs](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts.Tests/UseCases/ProductReviewTests.cs)
+- Covers success path: `ProductReview_ShouldCreateWithValidData` ([link](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts.Tests/UseCases/ProductReviewTests.cs#L17-L38))
+- Covers alternate path: `ProductReview_ShouldTransitionFromPendingToApproved` ([link](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts.Tests/UseCases/ProductReviewTests.cs#L102-L117))
 
 ---
 
@@ -245,6 +281,18 @@ Include your diagram image below.
 - A4: Customer cancels checkout
   - System retains cart items
   - Use case ends
+
+**## Implementation Evidence ##**
+- Entry point: [Order model](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts/Models/Order.cs)
+- Key collaborators:
+  - [OrderItem model](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts/Models/OrderItem.cs)
+  - [Cart model](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts/Models/Cart.cs)
+  - [Inventory model](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts/Models/Inventory.cs)
+
+**## Unit Test Evidence ##**
+- Test file: [OrderPlacementTests.cs](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts.Tests/UseCases/OrderPlacementTests.cs)
+- Covers success path: `Order_ShouldCreateWithRequiredInformation` ([link](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts.Tests/UseCases/OrderPlacementTests.cs#L17-L44))
+- Covers alternate path: `Order_ShouldHandlePaymentFailure` ([link](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts.Tests/UseCases/OrderPlacementTests.cs#L110-L128))
 
 ---
 
@@ -423,6 +471,17 @@ Include your diagram image below.
 - A6: Authenticated customer's cart persists across sessions
   - System saves cart to customer account
   - System restores cart on next login
+
+**## Implementation Evidence ##**
+- Entry point: [Cart model](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts/Models/Cart.cs)
+- Key collaborators:
+  - [CartItem model](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts/Models/CartItem.cs)
+  - [Product model](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts/Models/Product.cs)
+
+**## Unit Test Evidence ##**
+- Test file: [CartManagementTests.cs](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts.Tests/UseCases/CartManagementTests.cs)
+- Covers success path: `Cart_ShouldAddItem` ([link](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts.Tests/UseCases/CartManagementTests.cs#L32-L50))
+- Covers alternate path: `Cart_ShouldRemoveItem` ([link](https://github.com/Ghostshadow1222/MotherTreeCrafts/blob/917ceb2dcb784eb2fc7d24146279cde4ce159b74/MotherTreeCrafts.Tests/UseCases/CartManagementTests.cs#L109-L125))
 
 ---
 
