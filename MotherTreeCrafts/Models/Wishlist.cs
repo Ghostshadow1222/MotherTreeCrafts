@@ -43,14 +43,16 @@ public class Wishlist
   /// Automatically set to the current UTC time when a new Wishlist is created
   public DateTime DateAdded { get; set; } = DateTime.UtcNow;
 
-/* Doesn't need */ 
+/* Doesn't need
   /// <summary>
   /// Optional notes about why the user saved this item
   /// </summary>
   [MaxLength(500)]
   public string? Notes { get; set; }
+*/
 
-/* Adjust range to account for "weird" uppper limits */
+/* Adjust range to account for "weird" uppper limits 
+ * Adjusted to a more "resonable limit" */
   /// <summary>
   /// Priority level for this wishlist item (1 = highest priority)
   /// </summary>
