@@ -112,6 +112,7 @@ public class Inventory
     [NotMapped]
     public bool IsInStock => AvailableQuantity > 0;
 
+/* Not needed for current iteration
     /// <summary>
     /// Indicates if inventory is below reorder level
     /// </summary>
@@ -129,6 +130,7 @@ public class Inventory
     /// </summary>
     [MaxLength(50)]
     public string? SKU { get; set; }
+*/
 
     /// <summary>
     /// Date and time of last inventory update
@@ -217,9 +219,7 @@ public class Inventory
     {
         return QuantityOnHand >= 0
             && ReservedQuantity >= 0
-            && ReservedQuantity <= QuantityOnHand
-            && ReorderLevel >= 0
-            && MaxStockLevel >= ReorderLevel;
+            && ReservedQuantity <= QuantityOnHand;
     }
 
     /// <summary>
