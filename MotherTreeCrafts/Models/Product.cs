@@ -33,9 +33,15 @@ public class Product
     public string? ImageUrl { get; set; }
 
     /// <summary>
-    /// Type of craft (e.g., knitting, pottery, woodworking)
+    /// Foreign key to ProductType
     /// </summary>
-    public string? CraftType { get; set; }
+    public int? ProductTypeId { get; set; }
+
+    /// <summary>
+    /// Navigation property to ProductType
+    /// </summary>
+    [ForeignKey("ProductTypeId")]
+    public ProductType? ProductType { get; set; }
 
     /// <summary>
     /// Material or filament type (e.g., PLA, ABS, PETG, resin, wood, fabric, yarn)
