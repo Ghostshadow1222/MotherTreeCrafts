@@ -27,10 +27,13 @@ namespace MotherTreeCrafts.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Add unique constraint on SKU if needed (ensures no duplicate SKUs)
+            // Commented out - SKU property removed from Inventory model
+            /*
             modelBuilder.Entity<Inventory>()
                 .HasIndex(i => i.SKU)
                 .IsUnique()
                 .HasFilter("[SKU] IS NOT NULL");
+            */
 
             // Optional: Add index on ProductId for faster lookups
             modelBuilder.Entity<Inventory>()

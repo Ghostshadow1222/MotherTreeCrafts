@@ -87,6 +87,7 @@
                             </td>
                             <td class="align-middle">@product.Price.ToString("C")</td>
                             <td class="align-middle">
+                                @* Commented out - CraftType property removed from Product model
                                 @if (!string.IsNullOrEmpty(product.CraftType))
                                 {
                                     <span class="badge bg-info">@product.CraftType</span>
@@ -95,6 +96,8 @@
                                 {
                                     <span class="text-muted">-</span>
                                 }
+                                *@
+                                <span class="text-muted">-</span>
                             </td>
                             <td class="align-middle">
                                 @if (product.Inventory != null)
