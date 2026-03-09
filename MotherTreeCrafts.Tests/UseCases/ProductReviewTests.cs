@@ -21,33 +21,37 @@ public class ProductReviewTests
             ReviewId = 1,
             ProductId = 1,
             UserId = "user123",
+            ReviewerName = "John Doe",
             Rating = 5,
-            ReviewText = "Great product!",
-            ReviewStatus = "Pending"
+            Comment = "Great product!"
         };
 
         // Assert
         review.ProductId.Should().Be(1);
         review.UserId.Should().Be("user123");
         review.Rating.Should().Be(5);
-        review.ReviewText.Should().Be("Great product!");
-        review.ReviewStatus.Should().Be("Pending");
-        review.ReviewDate.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(1));
+        review.Comment.Should().Be("Great product!");
+        review.IsApproved.Should().BeTrue(); // Default value
+        // Note: ReviewDate is database-generated, so it won't be set until saved to DB
+        review.ReviewDate.Should().Be(default(DateTime));
     }
 
     [Fact]
-    public void ProductReview_ShouldDefaultToPendingStatus()
+    public void ProductReview_ShouldDefaultToApproved()
     {
         // Arrange & Act
         var review = new ProductReview
         {
             ProductId = 1,
             UserId = "user123",
+            ReviewerName = "John Doe",
+            Comment = "Test review",
             Rating = 4
         };
 
         // Assert
-        review.ReviewStatus.Should().Be("Pending");
+        review.IsApproved.Should().BeTrue(); // Defaults to true
+        review.IsVisible.Should().BeTrue(); // Defaults to true
     }
 
     [Theory]
@@ -61,6 +65,8 @@ public class ProductReviewTests
         {
             ProductId = 1,
             UserId = "user123",
+            ReviewerName = "John Doe",
+            Comment = "Test review",
             Rating = rating
         };
 
@@ -83,6 +89,8 @@ public class ProductReviewTests
         {
             ProductId = 1,
             UserId = "user123",
+            ReviewerName = "John Doe",
+            Comment = "Test review",
             Rating = invalidRating
         };
 
@@ -92,19 +100,21 @@ public class ProductReviewTests
     }
 
     [Fact]
-    public void ProductReview_ReviewText_ShouldBeOptional()
+    public void ProductReview_Title_ShouldBeOptional()
     {
         // Arrange & Act
         var review = new ProductReview
         {
             ProductId = 1,
             UserId = "user123",
+            ReviewerName = "John Doe",
+            Comment = "This is a required comment",
             Rating = 5,
-            ReviewText = null
+            Title = null
         };
 
         // Assert
-        review.ReviewText.Should().BeNull();
+        review.Title.Should().BeNull();
         review.Rating.Should().Be(5);
     }
 
@@ -120,34 +130,41 @@ public class ProductReviewTests
         {
             ProductId = 1,
             UserId = "user123",
+            ReviewerName = "John Doe",
+            Comment = "Test review",
             Rating = 5,
-            ReviewStatus = "Pending"
+            IsApproved = false
         };
 
         // Act
-        review.ReviewStatus = "Approved";
+        review.IsApproved = true;
 
         // Assert
-        review.ReviewStatus.Should().Be("Approved");
+        review.IsApproved.Should().BeTrue();
     }
 
     [Fact]
-    public void ProductReview_ShouldTransitionFromPendingToRejected()
+    public void ProductReview_ShouldTransitionFromApprovedToRejected()
     {
         // Arrange
         var review = new ProductReview
         {
             ProductId = 1,
             UserId = "user123",
+            ReviewerName = "John Doe",
+            Comment = "Test review",
             Rating = 5,
-            ReviewStatus = "Pending"
+            IsApproved = true,
+            IsVisible = true
         };
 
         // Act
-        review.ReviewStatus = "Rejected";
+        review.IsApproved = false;
+        review.IsVisible = false;
 
         // Assert
-        review.ReviewStatus.Should().Be("Rejected");
+        review.IsApproved.Should().BeFalse();
+        review.IsVisible.Should().BeFalse();
     }
 
     [Fact]
@@ -156,10 +173,10 @@ public class ProductReviewTests
         // Arrange
         var existingReviews = new List<ProductReview>
         {
-            new ProductReview { ReviewId = 1, ProductId = 1, UserId = "user123", Rating = 5 }
+            new ProductReview { ReviewId = 1, ProductId = 1, UserId = "user123", ReviewerName = "John Doe", Comment = "Great!", Rating = 5 }
         };
 
-        var newReview = new ProductReview { ProductId = 1, UserId = "user123", Rating = 4 };
+        var newReview = new ProductReview { ProductId = 1, UserId = "user123", ReviewerName = "John Doe", Comment = "Good", Rating = 4 };
 
         // Act
         var hasDuplicate = existingReviews.Any(r => 

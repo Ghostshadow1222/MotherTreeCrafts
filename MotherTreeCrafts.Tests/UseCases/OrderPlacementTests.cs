@@ -54,6 +54,7 @@ public class OrderPlacementTests
             UserId = "user123",
             ShippingAddress = "Test Address",
             BillingAddress = "Test Address",
+            OrderStatus = "Pending",
             SubTotal = subtotal,
             TaxAmount = tax,
             ShippingCost = shipping,
@@ -75,6 +76,7 @@ public class OrderPlacementTests
             UserId = "user123",
             ShippingAddress = "Test",
             BillingAddress = "Test",
+            OrderStatus = "Pending",
             SubTotal = 100m,
             TotalAmount = 100m
         };
@@ -86,7 +88,7 @@ public class OrderPlacementTests
             ProductId = 1,
             Quantity = 2,
             UnitPrice = 25.00m,
-            TotalPrice = 50.00m
+            LineTotal = 50.00m
         };
 
         var orderItem2 = new OrderItem
@@ -96,7 +98,7 @@ public class OrderPlacementTests
             ProductId = 2,
             Quantity = 1,
             UnitPrice = 50.00m,
-            TotalPrice = 50.00m
+            LineTotal = 50.00m
         };
 
         order.OrderItems.Add(orderItem1);
@@ -104,7 +106,7 @@ public class OrderPlacementTests
 
         // Assert
         order.OrderItems.Should().HaveCount(2);
-        order.OrderItems.Sum(oi => oi.TotalPrice).Should().Be(100.00m);
+        order.OrderItems.Sum(oi => oi.LineTotal).Should().Be(100.00m);
     }
 
     #endregion
@@ -189,7 +191,7 @@ public class OrderPlacementTests
     #region OrderItem Tests
 
     [Fact]
-    public void OrderItem_ShouldCalculateTotalPriceCorrectly()
+    public void OrderItem_ShouldCalculateLineTotalCorrectly()
     {
         // Arrange & Act
         var orderItem = new OrderItem
@@ -198,12 +200,12 @@ public class OrderPlacementTests
             ProductId = 1,
             Quantity = 3,
             UnitPrice = 25.00m,
-            TotalPrice = 3 * 25.00m
+            LineTotal = 3 * 25.00m
         };
 
         // Assert
-        orderItem.TotalPrice.Should().Be(75.00m);
-        orderItem.TotalPrice.Should().Be(orderItem.Quantity * orderItem.UnitPrice);
+        orderItem.LineTotal.Should().Be(75.00m);
+        orderItem.LineTotal.Should().Be(orderItem.Quantity * orderItem.UnitPrice);
     }
 
     #endregion

@@ -41,7 +41,7 @@ public class CartManagementTests
             CartId = 1,
             ProductId = 1,
             Quantity = 2,
-            UnitPrice = 25.00m
+            PriceAtTimeOfAdd = 25.00m
         };
 
         // Act
@@ -65,7 +65,7 @@ public class CartManagementTests
             CartId = 1,
             ProductId = 1,
             Quantity = 2,
-            UnitPrice = 25.00m
+            PriceAtTimeOfAdd = 25.00m
         };
 
         var item2 = new CartItem
@@ -74,14 +74,14 @@ public class CartManagementTests
             CartId = 1,
             ProductId = 2,
             Quantity = 1,
-            UnitPrice = 30.00m
+            PriceAtTimeOfAdd = 30.00m
         };
 
         cart.CartItems.Add(item1);
         cart.CartItems.Add(item2);
 
         // Act
-        var calculatedSubTotal = cart.CartItems.Sum(ci => ci.Quantity * ci.UnitPrice);
+        var calculatedSubTotal = cart.CartItems.Sum(ci => ci.Quantity * ci.PriceAtTimeOfAdd);
         cart.SubTotal = calculatedSubTotal;
 
         // Assert
@@ -103,7 +103,7 @@ public class CartManagementTests
             CartId = 1,
             ProductId = 1,
             Quantity = 2,
-            UnitPrice = 25.00m
+            PriceAtTimeOfAdd = 25.00m
         };
         cart.CartItems.Add(cartItem);
 
@@ -125,7 +125,7 @@ public class CartManagementTests
             CartId = 1,
             ProductId = 1,
             Quantity = 2,
-            UnitPrice = 25.00m
+            PriceAtTimeOfAdd = 25.00m
         };
         cart.CartItems.Add(cartItem);
 
@@ -141,8 +141,8 @@ public class CartManagementTests
     {
         // Arrange
         var cart = new Cart { CartId = 1, UserId = "user123" };
-        cart.CartItems.Add(new CartItem { CartItemId = 1, CartId = 1, ProductId = 1, Quantity = 2, UnitPrice = 25.00m });
-        cart.CartItems.Add(new CartItem { CartItemId = 2, CartId = 1, ProductId = 2, Quantity = 1, UnitPrice = 30.00m });
+        cart.CartItems.Add(new CartItem { CartItemId = 1, CartId = 1, ProductId = 1, Quantity = 2, PriceAtTimeOfAdd = 25.00m });
+        cart.CartItems.Add(new CartItem { CartItemId = 2, CartId = 1, ProductId = 2, Quantity = 1, PriceAtTimeOfAdd = 30.00m });
 
         // Act
         cart.CartItems.Clear();
@@ -195,10 +195,10 @@ public class CartManagementTests
             CartItemId = 1,
             ProductId = 1,
             Quantity = 3,
-            UnitPrice = 15.00m
+            PriceAtTimeOfAdd = 15.00m
         };
 
-        var totalPrice = cartItem.Quantity * cartItem.UnitPrice;
+        var totalPrice = cartItem.Quantity * cartItem.PriceAtTimeOfAdd;
 
         // Assert
         totalPrice.Should().Be(45.00m);
