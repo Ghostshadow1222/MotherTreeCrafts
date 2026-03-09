@@ -47,7 +47,7 @@ public class Inventory
             UpdateLastModified();
         }
     }
-/*
+/* Not needed for this project
     private int _reorderLevel = DefaultReorderLevel;
     /// <summary>
     /// Minimum quantity before reorder is needed
@@ -64,7 +64,7 @@ public class Inventory
             UpdateLastModified();
         }
     }
-
+*/
     private int _maxStockLevel = DefaultMaxStockLevel;
     /// <summary>
     /// Maximum quantity to keep in stock
@@ -77,8 +77,6 @@ public class Inventory
         {
             if (value < 0)
                 throw new ArgumentException("Max stock level cannot be negative.", nameof(MaxStockLevel));
-            if (value < ReorderLevel)
-                throw new ArgumentException("Max stock level cannot be less than reorder level.", nameof(MaxStockLevel));
             _maxStockLevel = value;
             UpdateLastModified();
         }
@@ -115,6 +113,7 @@ public class Inventory
     [NotMapped]
     public bool IsInStock => AvailableQuantity > 0;
 
+/* Not needed for current iteration
     /// <summary>
     /// Indicates if inventory is below reorder level
     /// </summary>
@@ -132,6 +131,7 @@ public class Inventory
     /// </summary>
     [MaxLength(50)]
     public string? SKU { get; set; }
+*/
 
     /// <summary>
     /// Date and time of last inventory update
@@ -221,10 +221,9 @@ public class Inventory
         return QuantityOnHand >= 0
             && ReservedQuantity >= 0
             && ReservedQuantity <= QuantityOnHand
-            && ReorderLevel >= 0
-            && MaxStockLevel >= ReorderLevel;
+            && MaxStockLevel >= 0;
     }
-*/
+
     /// <summary>
     /// Updates the LastUpdated timestamp
     /// </summary>

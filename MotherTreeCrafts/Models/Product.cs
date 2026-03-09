@@ -49,20 +49,22 @@ public class Product
     [MaxLength(100)]
     public string? Dimensions { get; set; }
 
-/* - Could be setup in alternate way?
+/* - Could be setup in alternate way? 
+ * Useable but not currently applicable, only owner and admin view */
     /// <summary>
     /// Weight of the product in grams (for shipping calculations)
     /// </summary>
     [Range(0, double.MaxValue)]
     public decimal? WeightInGrams { get; set; }
-*/
 
+/* - Remove for current iteration 
     /// <summary>
     /// Indicates if the product can be customized by customers
     /// </summary>
     public bool IsCustomizable { get; set; } = false;
+*/
 
-/* - Won't need for current version or future versions
+/* - Won't need for current version possible future iteration
     /// <summary>
     /// Indicates if this is a digital product (e.g., STL files, patterns, templates)
     /// </summary>
@@ -75,7 +77,8 @@ public class Product
     [MaxLength(500)]
     public string? Tags { get; set; }
 
-/* - Could be readded later after deeper review?
+/* - Could be readded later after deeper review? 
+ Keep but for owner and admin views */
     /// <summary>
     /// Indicates if the product is active and visible in the store
     /// </summary>
@@ -92,6 +95,7 @@ public class Product
     [MaxLength(200)]
     public string? ColorOptions { get; set; }
 
+/* - Remove for iteration 
     /// <summary>
     /// Difficulty level for craft kits or patterns (e.g., "Beginner", "Intermediate", "Advanced")
     /// </summary>
@@ -99,33 +103,37 @@ public class Product
     public string? DifficultyLevel { get; set; }
 */
 
-/* - Moved to non-active, will want to confirm with client later
+/* - Moved to non-active, will want to confirm with client later 
     /// <summary>
     /// URL or file path for downloadable digital content (for digital products)
     /// </summary>
     [MaxLength(500)]
     public string? DigitalFileUrl { get; set; }
 */
+
+/* - Remove from project 
     /// <summary>
     /// Designer or artist name (optional attribution)
     /// </summary>
     [MaxLength(200)]
     public string? DesignerName { get; set; }
+*/
 
-/* - Should be re-written/labelled when readded
+/* - Should be re-written/labelled when readded */
     /// <summary>
     /// Indicates if this is a made-to-order item
     /// </summary>
     public bool IsMadeToOrder { get; set; } = false;
-*/ 
+
   
-/* - Could be implemented better? Removed from current version
+/* - Could be implemented better? 
+ For public view use case makes sense for lower stock amounts*/
     /// <summary>
     /// Total quantity of the product available in stock (computed from Inventory)
     /// </summary>
     [NotMapped]
     public int StockQuantity => Inventory?.AvailableQuantity ?? 0;
-*/
+
 
     /// <summary>
     /// Average rating based on all reviews (computed property)
@@ -144,12 +152,13 @@ public class Product
     /// </summary>
     public ICollection<ProductReview> Reviews { get; set; } = new List<ProductReview>();
 
-/* - Will narrow down with client on keeping along with TotalReviews
+/* - Will narrow down with client on keeping along with TotalReviews 
+ Remove for iteration */
     /// <summary>
     /// Collection of wishlist entries for this product
     /// </summary>
     public ICollection<Wishlist> WishlistEntries { get; set; } = new List<Wishlist>();
-*/
+
 
     /// <summary>
     /// Detailed inventory tracking for this product
