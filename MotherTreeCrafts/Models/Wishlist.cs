@@ -17,13 +17,13 @@ public class Wishlist
   /// Foreign key to the Account/User who saved this product
   /// </summary>
   [Required]
-  public required string AccountId { get; set; }
+  public required string UserId { get; set; }
 
   /// <summary>
   /// Navigation property to the UserAccount
   /// </summary>
-  [ForeignKey(nameof(AccountId))]
-  public UserAccount? Account { get; set; }
+  [ForeignKey(nameof(UserId))]
+  public UserAccount? User { get; set; }
 
   /// <summary>
   /// Foreign key to the Product that was saved
