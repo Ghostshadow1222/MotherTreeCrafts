@@ -77,6 +77,7 @@ public class Inventory
         {
             if (value < 0)
                 throw new ArgumentException("Max stock level cannot be negative.", nameof(MaxStockLevel));
+            _maxStockLevel = value;
             UpdateLastModified();
         }
     }
@@ -219,7 +220,8 @@ public class Inventory
     {
         return QuantityOnHand >= 0
             && ReservedQuantity >= 0
-            && ReservedQuantity <= QuantityOnHand;
+            && ReservedQuantity <= QuantityOnHand
+            && MaxStockLevel >= 0;
     }
 
     /// <summary>

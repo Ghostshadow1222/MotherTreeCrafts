@@ -38,7 +38,7 @@ public class ProductReview
   [MaxLength(100)]
   public required string ReviewerName { get; set; }
 
-    /* - Too much info for an review from a register user 
+    /* - Too much info for a review from a registered user 
       /// <summary>
       /// Email of the reviewer (optional, for verification purposes)
       /// </summary>
