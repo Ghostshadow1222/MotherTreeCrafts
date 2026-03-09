@@ -50,25 +50,26 @@ public class Product
     public string? Dimensions { get; set; }
 
 /* - Could be setup in alternate way? 
- * Useable but not currently applicable, only owner and admin view*/
+ * Useable but not currently applicable, only owner and admin view */
     /// <summary>
     /// Weight of the product in grams (for shipping calculations)
     /// </summary>
     [Range(0, double.MaxValue)]
     public decimal? WeightInGrams { get; set; }
 
-/* - Remove for current iteration */
+/* - Remove for current iteration 
     /// <summary>
     /// Indicates if the product can be customized by customers
     /// </summary>
     public bool IsCustomizable { get; set; } = false;
+*/
 
-/* - Won't need for current version possible future iteration*/
+/* - Won't need for current version possible future iteration
     /// <summary>
     /// Indicates if this is a digital product (e.g., STL files, patterns, templates)
     /// </summary>
     public bool IsDigitalProduct { get; set; } = false;
-
+*/
 
     /// <summary>
     /// Comma-separated tags for better categorization and search (e.g., "3d-print,miniature,gaming")
@@ -93,26 +94,30 @@ public class Product
     /// </summary>
     [MaxLength(200)]
     public string? ColorOptions { get; set; }
-/* - Remove for iteration */
+
+/* - Remove for iteration 
     /// <summary>
     /// Difficulty level for craft kits or patterns (e.g., "Beginner", "Intermediate", "Advanced")
     /// </summary>
     [MaxLength(50)]
     public string? DifficultyLevel { get; set; }
+*/
 
-
-/* - Moved to non-active, will want to confirm with client later */
+/* - Moved to non-active, will want to confirm with client later 
     /// <summary>
     /// URL or file path for downloadable digital content (for digital products)
     /// </summary>
     [MaxLength(500)]
     public string? DigitalFileUrl { get; set; }
-/* - Remove from project */
+*/
+
+/* - Remove from project 
     /// <summary>
     /// Designer or artist name (optional attribution)
     /// </summary>
     [MaxLength(200)]
     public string? DesignerName { get; set; }
+*/
 
 /* - Should be re-written/labelled when readded */
     /// <summary>
