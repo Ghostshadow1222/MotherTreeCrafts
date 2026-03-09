@@ -77,6 +77,7 @@ public class Inventory
         {
             if (value < 0)
                 throw new ArgumentException("Max stock level cannot be negative.", nameof(MaxStockLevel));
+            _maxStockLevel = value;
             UpdateLastModified();
         }
     }
