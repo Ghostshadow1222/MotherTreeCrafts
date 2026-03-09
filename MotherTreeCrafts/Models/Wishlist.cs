@@ -50,7 +50,7 @@ public class Wishlist
   [MaxLength(500)]
   public string? Notes { get; set; }
 
-/* Adjust range to account for "weird" uppper limits */
+/* Adjust range to account for "weird" upper limits */
   /// <summary>
   /// Priority level for this wishlist item (1 = highest priority)
   /// </summary>
