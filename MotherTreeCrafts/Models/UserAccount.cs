@@ -32,11 +32,6 @@ public class UserAccount : IdentityUser
     public string? BillingAddress { get; set; }
 
     /// <summary>
-    /// User's email address for order management
-    /// </summary>
-    public string? EmailAddress { get; set; }
-
-    /// <summary>
     /// Collection of wishlist items for this account
     /// </summary>
     public ICollection<Wishlist> WishlistItems { get; set; } = new List<Wishlist>();

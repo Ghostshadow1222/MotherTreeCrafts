@@ -19,8 +19,12 @@ builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 // Register our custom EmailSender
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
-// Ensure that Identity requires confirmed accounts 
-builder.Services.AddDefaultIdentity<UserAccount>(options => options.SignIn.RequireConfirmedAccount = true)
+// Ensure that Identity requires confirmed accounts and unique emails
+builder.Services.AddDefaultIdentity<UserAccount>(options => 
+    {
+        options.SignIn.RequireConfirmedAccount = true;
+        options.User.RequireUniqueEmail = true; // Prevent duplicate emails
+    })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
