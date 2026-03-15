@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MotherTreeCrafts.Data;
 using MotherTreeCrafts.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using MotherTreeCrafts.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+// Bind the SendGrid key from your configuration/secrets
+builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
+
+// Register our custom EmailSender
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+// Ensure that Identity requires confirmed accounts 
 builder.Services.AddDefaultIdentity<UserAccount>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
