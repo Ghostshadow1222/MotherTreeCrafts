@@ -3,24 +3,21 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MotherTreeCrafts.Data;
 
 #nullable disable
 
-namespace MotherTreeCrafts.Data.Migrations
+namespace MotherTreeCrafts.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251121062522_ImprovedInventoryModel")]
-    partial class ImprovedInventoryModel
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.9")
+                .HasAnnotation("ProductVersion", "9.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -162,85 +159,77 @@ namespace MotherTreeCrafts.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("MotherTreeCrafts.Models.Account", b =>
+            modelBuilder.Entity("MotherTreeCrafts.Models.Cart", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
+                    b.Property<int>("CartId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("BillingAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                    b.Property<DateTime?>("ExpiresAt")
+                        .HasColumnType("datetime2");
 
-                    b.Property<bool>("EmailConfirmed")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("SessionId")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                    b.HasKey("CartId");
 
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                    b.HasIndex("UserId");
 
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
+                    b.ToTable("Carts");
+                });
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+            modelBuilder.Entity("MotherTreeCrafts.Models.CartItem", b =>
+                {
+                    b.Property<int>("CartItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartItemId"));
 
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("ShippingAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("CustomizationDetails")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                    b.Property<decimal>("PriceAtTimeOfAdd")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                    b.HasKey("CartItemId");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("MotherTreeCrafts.Models.Inventory", b =>
@@ -267,30 +256,138 @@ namespace MotherTreeCrafts.Data.Migrations
                     b.Property<int>("QuantityOnHand")
                         .HasColumnType("int");
 
-                    b.Property<int>("ReorderLevel")
-                        .HasColumnType("int");
-
                     b.Property<int>("ReservedQuantity")
                         .HasColumnType("int");
-
-                    b.Property<string>("SKU")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("StorageLocation")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("InventoryId");
 
                     b.HasIndex("ProductId")
                         .IsUnique();
 
-                    b.HasIndex("SKU")
-                        .IsUnique()
-                        .HasFilter("[SKU] IS NOT NULL");
-
                     b.ToTable("Inventories");
+                });
+
+            modelBuilder.Entity("MotherTreeCrafts.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
+
+                    b.Property<string>("BillingAddress")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("CancellationReason")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime?>("DeliveredDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("OrderStatus")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PaymentMethod")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PaymentStatus")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal?>("RefundAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("ShippedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ShippingAddress")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<decimal>("ShippingCost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TaxAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("TrackingNumber")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("MotherTreeCrafts.Models.OrderItem", b =>
+                {
+                    b.Property<int>("OrderItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderItemId"));
+
+                    b.Property<string>("CustomizationDetails")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<decimal>("LineTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("OrderItemId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("MotherTreeCrafts.Models.Product", b =>
@@ -305,24 +402,9 @@ namespace MotherTreeCrafts.Data.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("CraftType")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("DesignerName")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("DifficultyLevel")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("DigitalFileUrl")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Dimensions")
                         .HasMaxLength(100)
@@ -332,12 +414,6 @@ namespace MotherTreeCrafts.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsCustomizable")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDigitalProduct")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsFeatured")
@@ -353,6 +429,9 @@ namespace MotherTreeCrafts.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int?>("ProductTypeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Tags")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -365,6 +444,8 @@ namespace MotherTreeCrafts.Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ProductId");
+
+                    b.HasIndex("ProductTypeId");
 
                     b.ToTable("Products");
                 });
@@ -425,10 +506,6 @@ namespace MotherTreeCrafts.Data.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<string>("ReviewerEmail")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
                     b.Property<string>("ReviewerName")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -445,14 +522,116 @@ namespace MotherTreeCrafts.Data.Migrations
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool?>("WouldRecommend")
-                        .HasColumnType("bit");
-
                     b.HasKey("ReviewId");
 
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductReviews");
+                });
+
+            modelBuilder.Entity("MotherTreeCrafts.Models.ProductType", b =>
+                {
+                    b.Property<int>("ProductTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductTypeId"));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("ProductTypeId");
+
+                    b.ToTable("ProductTypes");
+                });
+
+            modelBuilder.Entity("MotherTreeCrafts.Models.UserAccount", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BillingAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShippingAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("MotherTreeCrafts.Models.Wishlist", b =>
@@ -463,16 +642,8 @@ namespace MotherTreeCrafts.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WishlistId"));
 
-                    b.Property<string>("AccountId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("Priority")
                         .HasColumnType("int");
@@ -480,11 +651,15 @@ namespace MotherTreeCrafts.Data.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("WishlistId");
 
-                    b.HasIndex("AccountId");
-
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Wishlists");
                 });
@@ -500,7 +675,7 @@ namespace MotherTreeCrafts.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("MotherTreeCrafts.Models.Account", null)
+                    b.HasOne("MotherTreeCrafts.Models.UserAccount", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -509,7 +684,7 @@ namespace MotherTreeCrafts.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("MotherTreeCrafts.Models.Account", null)
+                    b.HasOne("MotherTreeCrafts.Models.UserAccount", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -524,7 +699,7 @@ namespace MotherTreeCrafts.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MotherTreeCrafts.Models.Account", null)
+                    b.HasOne("MotherTreeCrafts.Models.UserAccount", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -533,11 +708,39 @@ namespace MotherTreeCrafts.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("MotherTreeCrafts.Models.Account", null)
+                    b.HasOne("MotherTreeCrafts.Models.UserAccount", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MotherTreeCrafts.Models.Cart", b =>
+                {
+                    b.HasOne("MotherTreeCrafts.Models.UserAccount", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MotherTreeCrafts.Models.CartItem", b =>
+                {
+                    b.HasOne("MotherTreeCrafts.Models.Cart", "Cart")
+                        .WithMany("CartItems")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MotherTreeCrafts.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("MotherTreeCrafts.Models.Inventory", b =>
@@ -549,6 +752,45 @@ namespace MotherTreeCrafts.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("MotherTreeCrafts.Models.Order", b =>
+                {
+                    b.HasOne("MotherTreeCrafts.Models.UserAccount", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MotherTreeCrafts.Models.OrderItem", b =>
+                {
+                    b.HasOne("MotherTreeCrafts.Models.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MotherTreeCrafts.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("MotherTreeCrafts.Models.Product", b =>
+                {
+                    b.HasOne("MotherTreeCrafts.Models.ProductType", "ProductType")
+                        .WithMany("Products")
+                        .HasForeignKey("ProductTypeId");
+
+                    b.Navigation("ProductType");
                 });
 
             modelBuilder.Entity("MotherTreeCrafts.Models.ProductReview", b =>
@@ -564,26 +806,31 @@ namespace MotherTreeCrafts.Data.Migrations
 
             modelBuilder.Entity("MotherTreeCrafts.Models.Wishlist", b =>
                 {
-                    b.HasOne("MotherTreeCrafts.Models.Account", "Account")
-                        .WithMany("WishlistItems")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MotherTreeCrafts.Models.Product", "Product")
                         .WithMany("WishlistEntries")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Account");
+                    b.HasOne("MotherTreeCrafts.Models.UserAccount", "User")
+                        .WithMany("WishlistItems")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MotherTreeCrafts.Models.Account", b =>
+            modelBuilder.Entity("MotherTreeCrafts.Models.Cart", b =>
                 {
-                    b.Navigation("WishlistItems");
+                    b.Navigation("CartItems");
+                });
+
+            modelBuilder.Entity("MotherTreeCrafts.Models.Order", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("MotherTreeCrafts.Models.Product", b =>
@@ -593,6 +840,16 @@ namespace MotherTreeCrafts.Data.Migrations
                     b.Navigation("Reviews");
 
                     b.Navigation("WishlistEntries");
+                });
+
+            modelBuilder.Entity("MotherTreeCrafts.Models.ProductType", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("MotherTreeCrafts.Models.UserAccount", b =>
+                {
+                    b.Navigation("WishlistItems");
                 });
 #pragma warning restore 612, 618
         }

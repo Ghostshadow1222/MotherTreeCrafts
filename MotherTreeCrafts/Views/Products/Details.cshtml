@@ -54,6 +54,7 @@
                 {
                     <span class="badge bg-danger">Inactive</span>
                 }
+                @* Commented out - IsDigitalProduct and IsCustomizable properties removed from Product model
                 @if (Model.IsDigitalProduct)
                 {
                     <span class="badge bg-info">Digital Product</span>
@@ -62,6 +63,7 @@
                 {
                     <span class="badge bg-secondary">Customizable</span>
                 }
+                *@
                 @if (Model.IsMadeToOrder)
                 {
                     <span class="badge bg-primary">Made to Order</span>
@@ -85,11 +87,13 @@
                 </div>
                 <div class="card-body">
                     <dl class="row mb-0">
+                        @* Commented out - CraftType property removed from Product model
                         @if (!string.IsNullOrEmpty(Model.CraftType))
                         {
                             <dt class="col-sm-4">Craft Type:</dt>
                             <dd class="col-sm-8">@Model.CraftType</dd>
                         }
+                        *@
                         
                         @if (!string.IsNullOrEmpty(Model.Material))
                         {
@@ -115,17 +119,19 @@
                             <dd class="col-sm-8">@Model.ColorOptions</dd>
                         }
                         
+                        @* Commented out - properties removed from Product model
                         @if (!string.IsNullOrEmpty(Model.DifficultyLevel))
                         {
                             <dt class="col-sm-4">Difficulty Level:</dt>
                             <dd class="col-sm-8">@Model.DifficultyLevel</dd>
                         }
-                        
+
                         @if (!string.IsNullOrEmpty(Model.DesignerName))
                         {
                             <dt class="col-sm-4">Designer:</dt>
                             <dd class="col-sm-8">@Model.DesignerName</dd>
                         }
+                        *@
                     </dl>
                 </div>
             </div>
@@ -159,28 +165,32 @@
                                 <dd class="col-sm-8">@Model.Inventory.ReservedQuantity units</dd>
                             }
                             
+                            @* Commented out - properties removed from Inventory model
                             @if (!string.IsNullOrEmpty(Model.Inventory.SKU))
                             {
                                 <dt class="col-sm-4">SKU:</dt>
                                 <dd class="col-sm-8"><code>@Model.Inventory.SKU</code></dd>
                             }
-                            
+
                             @if (!string.IsNullOrEmpty(Model.Inventory.StorageLocation))
                             {
                                 <dt class="col-sm-4">Storage Location:</dt>
                                 <dd class="col-sm-8">@Model.Inventory.StorageLocation</dd>
                             }
+                            *@
                             
                             <dt class="col-sm-4">Last Updated:</dt>
                             <dd class="col-sm-8">@Model.Inventory.LastUpdated.ToString("g")</dd>
                         </dl>
                         
+                        @* Commented out - NeedsReorder and ReorderLevel properties removed from Inventory model
                         @if (Model.Inventory.NeedsReorder)
                         {
                             <div class="alert alert-warning mt-3 mb-0" role="alert">
                                 <i class="bi bi-exclamation-triangle"></i> Stock is below reorder level (@Model.Inventory.ReorderLevel units)
                             </div>
                         }
+                        *@
                     </div>
                 </div>
             }
@@ -198,6 +208,7 @@
             }
 
             <!-- Digital Product Info -->
+            @* Commented out - IsDigitalProduct and DigitalFileUrl properties removed from Product model
             @if (Model.IsDigitalProduct && !string.IsNullOrEmpty(Model.DigitalFileUrl))
             {
                 <div class="alert alert-info" role="alert">
@@ -205,6 +216,7 @@
                     <p class="mb-0">This is a digital product. Download link will be provided after purchase.</p>
                 </div>
             }
+            *@
 
             <!-- Reviews Summary -->
             @if (Model.Reviews.Any())

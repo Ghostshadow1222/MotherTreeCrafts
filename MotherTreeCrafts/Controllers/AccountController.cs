@@ -36,7 +36,7 @@ public class AccountController : Controller
         }
 
         var wishlistItems = await _context.Wishlists
-            .Where(w => w.AccountId == user.Id)
+            .Where(w => w.UserId == user.Id)
             .Include(w => w.Product)
             .ThenInclude(p => p.Inventory)
             .OrderBy(w => w.Priority)
@@ -115,7 +115,7 @@ public class AccountController : Controller
         try
         {
             var existingItem = await _context.Wishlists
-                .FirstOrDefaultAsync(w => w.AccountId == user.Id && w.ProductId == productId);
+                .FirstOrDefaultAsync(w => w.UserId == user.Id && w.ProductId == productId);
 
             if (existingItem != null)
             {
@@ -124,7 +124,7 @@ public class AccountController : Controller
             /* -- Disabled wishlist function for better implementation later
             var wishlistItem = new Wishlist
             {
-                AccountId = user.Id,
+                UserId = user.Id,
                 ProductId = productId,
                 Priority = priority
             };
@@ -155,7 +155,7 @@ public class AccountController : Controller
         try
         {
             var wishlistItem = await _context.Wishlists
-                .FirstOrDefaultAsync(w => w.WishlistId == wishlistId && w.AccountId == user.Id);
+                .FirstOrDefaultAsync(w => w.WishlistId == wishlistId && w.UserId == user.Id);
 
             if (wishlistItem != null)
             {

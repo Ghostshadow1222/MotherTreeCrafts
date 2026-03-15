@@ -48,11 +48,13 @@
                                     <dd class="col-sm-8">@Model.Description</dd>
                                 }
 
+                                @* Commented out - CraftType property removed from Product model
                                 @if (!string.IsNullOrEmpty(Model.CraftType))
                                 {
                                     <dt class="col-sm-4">Craft Type:</dt>
                                     <dd class="col-sm-8">@Model.CraftType</dd>
                                 }
+                                *@
 
                                 @if (Model.Inventory != null)
                                 {
