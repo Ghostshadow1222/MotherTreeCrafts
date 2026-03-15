@@ -32,9 +32,8 @@ public class EmailSender : IEmailSender
         var client = new SendGridClient(apiKey);
         var msg = new SendGridMessage()
         {
-            // CHANGE THIS LINE: 
-            // Replace with the exact email address you verified in SendGrid (Single Sender Verification)
-            From = new EmailAddress("john.rocks.719@gmail.com", "Mother Tree Crafts"),
+            // Now pulling dynamically from settings!
+            From = new EmailAddress(Options.SenderEmail, Options.SenderName ?? "Mother Tree Crafts"),
             
             Subject = subject,
             PlainTextContent = message,
