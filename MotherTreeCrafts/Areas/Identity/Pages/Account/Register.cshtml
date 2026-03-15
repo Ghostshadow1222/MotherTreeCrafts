@@ -38,7 +38,7 @@
                         <input asp-for="Input.Password" id="passwordInput" class="form-control" style="border-top-right-radius: 0; border-bottom-right-radius: 0;" autocomplete="new-password" aria-required="true" placeholder="password" />
                         <label asp-for="Input.Password">Password</label>
                     </div>
-                    <button class="btn btn-outline-secondary" type="button" id="togglePasswordBtn" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">Show</button>
+                    <button class="btn btn-outline-secondary" type="button" id="togglePasswordBtn" style="border-top-left-radius: 0; border-bottom-left-radius: 0;" aria-label="Show password" aria-controls="passwordInput" aria-pressed="false">Show</button>
                 </div>
                 <span asp-validation-for="Input.Password" class="text-danger d-block mb-3"></span>
 
@@ -47,7 +47,7 @@
                         <input asp-for="Input.ConfirmPassword" id="confirmPasswordInput" class="form-control" style="border-top-right-radius: 0; border-bottom-right-radius: 0;" autocomplete="new-password" aria-required="true" placeholder="password" />
                         <label asp-for="Input.ConfirmPassword">Confirm Password</label>
                     </div>
-                    <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPasswordBtn" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">Show</button>
+                    <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPasswordBtn" style="border-top-left-radius: 0; border-bottom-left-radius: 0;" aria-label="Show confirm password" aria-controls="confirmPasswordInput" aria-pressed="false">Show</button>
                 </div>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger d-block mb-3"></span>
 
